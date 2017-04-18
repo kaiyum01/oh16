@@ -1,0 +1,28 @@
+body{
+/*margin-top:150px;*/
+/*font-family: sans-serif; */
+font-family: calibri;
+font-size:15px;
+}
+.btn {
+display:none;
+}
+table{
+border:1px solid black;border-collapse:collapse;font-family:calibri;}
+
+#print_btn{
+	color:red;
+	background-color:#06C;
+	color:#FFF;
+	margin-top:0;
+	padding:5px;
+	}
+@media print {
+  #print_btn {
+  display: none;
+  }
+}
+
+
+
+
