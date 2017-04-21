@@ -48,19 +48,15 @@ function closeNav() {
 }
 </script>
 <!-- Horizontal menu js -->
-<script type="text/javascript">
-var current = document.getElementById('default');
+<script>
+  $(document).ready(function(){
+  $('ul li a').click(function(){
+    $('li a').removeClass("active");
+    $(this).addClass("active");
+});
+});
 
-  function highlite(el)
-  {
-     if (current != null)
-     {
-         current.className = "";
-     }
-     el.className = "highlite";
-     current = el;
-  }
-</script> 
+</script>
 
 <style type="text/css">
 .sidenav {
@@ -106,23 +102,31 @@ var current = document.getElementById('default');
   .sidenav a {font-size: 18px;}
 }
 /* horizontal menu style */
-#navv {
-	width:100%;
-	list-style:none;
-	margin-left:200px;
+
+
+nav ul li{
+  list-style:none;
+  float:left;
+  padding-right:2px;
 }
-#navv li{
-display:inline;
+nav ul li a{
+  text-decoration:none;
+  color:#222;
+  background-color:#ccc;
+  padding:8px 8px;
+  text-decoration: none !important;
 }
-#navv a {
-	color:black;
-	text-decoration:none;
-	outline:0;
-	background-color:#CCCCCC;
-	padding:10px;
+nav ul li a:hover{
+  background-color: black;
+  color:white;
+  }
+.active{
+  background-color:#d90000;
+  color:#fff;
+
 }
-#navv a:active, #navv a:focus, #navv a:hover {
-	color:red; 
+.activee{
+  background-color:#000;
 }
 
 </style>
@@ -158,7 +162,7 @@ display:inline;
             </div>-->
           </div>
          <div class="dropdown">
-           <a href="commercial_home.php"><button class="dropbtn">commercial</button></a>
+           <a href="commercial_home.php"><button class="dropbtn activee">commercial</button></a>
            <!-- <div class="dropdown-content">
               <a href="#">Link 1</a>
               <a href="#">Link 2</a>
@@ -193,14 +197,16 @@ display:inline;
      
   </div>
   <span style="font-size:20px;cursor:pointer; float:left;" onClick="openNav()">&#9776; open</span>
-  
-<div class="horizontal_menu" style="float:left; text-align:center;">  
-<ul id="navv">
-  <li><a id="default" class="highlite" onclick="highlite(this);" href="create_quotation.php">Create quotation</a></li>
-  <li><a onclick="highlite(this);" href="order_entry.php">Order Entry</a></li>
-  <li><a onclick="highlite(this);" href="create_bill.php">Create bill</a></li>
-  <li><a onclick="highlite(this);" href="create_challan.php">Create challan</a></li>
-</ul>
+
+<div class="horizontal_menu" style="float:left; text-align:center; margin-left: 25%;">
+  <nav class="navecation"> 
+    <ul id="navv">
+      <li><a class="menu" href="create_quotation.php">Create quotation</a></li>
+      <li><a class="menu" href="order_entry.php">Order Entry</a></li>
+      <li><a class="menu" href="create_bill.php">Create bill</a></li>
+      <li><a class="menu" href="create_challan.php">Create challan</a></li>
+    </ul>
+  </nav>
 </div>
 
   <span>  
@@ -218,6 +224,18 @@ display:inline;
 
 <h1 style="text-align:center;">commercial home</h1>
 
+
+  <div class="col-md-12">
+    <div class="col-md-2"> 
+    </div>
+    <div class="col-md-8">
+     <div style="margin-top: 18%;" class="jumbotron">
+      <h1 style="color: #fff; text-align: center;">Oh commercial module</h1>
+     </div>
+    </div>
+    <div class="col-md-2">
+    </div>
+  </div>
 
 
   

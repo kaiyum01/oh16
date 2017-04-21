@@ -37,6 +37,7 @@ include('../include/message_function.php');
   <link rel="stylesheet" href="../css/font-awesome/css/font-awesome.min.css">
   <script type="text/javascript" src="../include/function_for_js.js"></script>
   <script type="text/javascript" src="../js/jquery.js"></script>
+  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
  <!-- <script type="../js/jquery.min.js"></script>-->
   <script type="../js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="../css/jquery_ui.css">
@@ -74,6 +75,7 @@ function data_send(){
         var to_company      = $("#cbo_to_com_name").val();
         var to_address      = $("#txt_to_address").val();
         var to_subject      = $("#txt_to_subject").val();
+        var to_concern      = $("#txt_to_concern").val();
         var total_amount    = $("#subtotal").val();
         var vat             = $("#vat").val();
         var ait             = $("#ait").val();
@@ -82,9 +84,18 @@ function data_send(){
 
         var hidden_quotation_id  = $("#hidden_quotation_id").val();
         var hidden_order_id      = $("#hidden_order_id").val();
-		var hidden_short_name   = $("#txt_short_name").val();
+		    var hidden_short_name   = $("#txt_short_name").val();
 
-        var dataString = '&to_bill_date='+ to_bill_date + '&to_subject='+ to_subject + '&hidden_quotation_id='+ hidden_quotation_id + '&hidden_order_id='+ hidden_order_id + '&hidden_short_name='+ hidden_short_name;
+
+        //notes
+        var noteArray=[];
+        $("input:checkbox[name=note]:checked").each(function(){
+            noteArray.push($(this).val());
+        });
+        var noteStr = noteArray.join(",");
+        //alert(noteStr);return;
+
+        var dataString = '&to_bill_date='+ to_bill_date + '&to_subject='+ to_subject + '&hidden_quotation_id='+ hidden_quotation_id + '&hidden_order_id='+ hidden_order_id + '&hidden_short_name='+ hidden_short_name + '&noteStr='+ noteStr + '&to_concern='+ to_concern;
     //alert(dataString);
       /* var row_count=$('#tbl_quotation_id tbody tr').length;
         //alert(row_count);return;
@@ -129,12 +140,13 @@ function data_send(){
         $("#txt_bill_date").val(''); 
         $("#txt_to_desig").val('');
         $("#txt_to_address").val(''); 
+        $("#txt_to_concern").val('');
         $("#total_with_vat").val('');
         $("#takainword").val('');
         $("#update_id").val(''); 
         $("#hidden_quotation_id").val('');
         $("#hidden_order_id").val('');
-		$("#txt_short_name").val('');
+		    $("#txt_short_name").val('');
          show_datas();
       }
     });
@@ -278,6 +290,7 @@ for (var i = 0; i < len; i++) {
          $("#cbo_to_com_name").val(results['to_company']);
          $("#txt_to_address").val(results['to_address']);
          $("#txt_to_subject").val(results['bill_subject']);
+         $("#txt_to_concern").val(results['dearSir']);
          $("#subtotal").val(results['total_amount']);
          $("#vat").val(results['vat']);
          $("#ait").val(results['ait']);
@@ -285,6 +298,16 @@ for (var i = 0; i < len; i++) {
          $("#takainword").val(results['total_amount_in_word']);
 				 $('#update_id').val(results['bill_id']);
         $('#hidden_quotation_id').val(results['quotation_id']);
+
+
+         var noteData=results['notes'].split(',');
+          if (noteData[0]>0) { 
+         for (var i=0; i<noteData.length;i++) {
+           document.getElementById("note_"+noteData[i]).checked = true;
+         }
+       }
+       else{$("input[name='note']:checkbox").prop('checked',false);}
+
 				 $('#save').addClass('disabled', true);			 
 				 $('#update').removeClass('disabled',false);
          $('#print').removeClass('disabled',false);
@@ -306,6 +329,7 @@ for (var i = 0; i < len; i++) {
           var to_company=results['to_company'];
           var to_address=results['to_address'];
           var to_quotation_subject=results['bill_subject'];
+          var to_concern=results['dearSir'];
           var total_amount=results['total_amount'];
           var vat=results['vat'];
           var ait=results['ait'];
@@ -426,6 +450,7 @@ function data_update(){
   var to_company      = $("#cbo_to_com_name").val();
   var to_address      = $("#txt_to_address").val();
   var to_subject      = $("#txt_to_subject").val();
+  var to_concern      = $("#txt_to_concern").val();
   var total_amount    = $("#subtotal").val();
   var vat             = $("#vat").val();
   var ait             = $("#ait").val();
@@ -433,8 +458,17 @@ function data_update(){
   var takainword      = $("#takainword").val();
 	var id 				      = $("#update_id").val();
 
+    //notes
+    var noteArray=[];
+    $("input:checkbox[name=note]:checked").each(function(){
+        noteArray.push($(this).val());
+    });
+    var noteStr = noteArray.join(",");
+    //alert(noteStr);return;
+
+
 	// Returns successful data submission message when the entered information is stored in database.
-   var dataString = '&to_bill_date='+ to_bill_date + '&to_subject='+ to_subject +'&update_id1='+ id;
+   var dataString = '&to_bill_date='+ to_bill_date + '&to_subject='+ to_subject +'&update_id1='+ id + '&noteStr='+ noteStr + '&to_concern='+ to_concern ;
 	 /*if(to_name==''||to_designation==''){
           $("#msg_failed").css({"display":"block","background-color":"#EE5269"}).fadeOut(8000).html(" You have must fill out <b>red * mark</b>!"); 
   }*/
@@ -464,6 +498,7 @@ function data_update(){
         $("#txt_bill_date").val('');
         $("#txt_to_desig").val('');
         $("#txt_to_address").val(''); 
+        $("#txt_to_concern").val(''); 
         $("#total_with_vat").val('');
         $("#takainword").val('');
         $("#update_id").val(''); 
@@ -630,18 +665,14 @@ $(window).resize(function() {
 //// scrolling table list view END
 </script>
 <!-- Horizontal menu js -->
-<script type="text/javascript">
-var current = document.getElementById('default');
+<script>
+  $(document).ready(function(){
+  $('ul li a').click(function(){
+    $('li a').removeClass("active");
+    $(this).addClass("active");
+});
+});
 
-  function highlite(el)
-  {
-     if (current != null)
-     {
-         current.className = "";
-     }
-     el.className = "highlite";
-     current = el;
-  }
 </script> 
 <style type="text/css">
 .sidenav {
@@ -700,23 +731,29 @@ var current = document.getElementById('default');
 }
 
 /* horizontal menu style */
-#navv {
-	width:100%;
-	list-style:none;
-	margin-left:200px;
+nav ul li{
+  list-style:none;
+  float:left;
+  padding-right:2px;
 }
-#navv li{
-display:inline;
+nav ul li a{
+  text-decoration:none;
+  color:#222;
+  background-color:#ccc;
+  padding:8px 8px;
+  text-decoration: none !important;
 }
-#navv a {
-	color:black;
-	text-decoration:none;
-	outline:0;
-	background-color:#CCCCCC;
-	padding:10px;
+nav ul li a:hover{
+  background-color: black;
+  color:white;
+  }
+.active{
+  background-color:#d90000;
+  color:#fff;
+
 }
-#navv a:active, #navv a:focus, #navv a:hover {
-	color:red; 
+.activee{
+  background-color:#000;
 }
 </style>
 </head>
@@ -751,7 +788,7 @@ display:inline;
             </div>-->
           </div>
          <div class="dropdown">
-            <a href="commercial_home.php"><button class="dropbtn">commercial</button></a>
+            <a href="commercial_home.php"><button class="dropbtn activee">commercial</button></a>
             <!--<div class="dropdown-content">
               <a href="#">Link 1</a>
               <a href="#">Link 2</a>
@@ -790,14 +827,17 @@ display:inline;
   </div>
   <span style="font-size:20px;cursor:pointer; float:left;" onClick="openNav()">&#9776; menu</span>
   
-  <div class="horizontal_menu" style="float:left; text-align:center;">  
-	<ul id="navv">
-	  <li><a id="default" class="highlite" onclick="highlite(this);" href="create_quotation.php">Create quotation</a></li>
-	  <li><a onclick="highlite(this);" href="order_entry.php">Order Entry</a></li>
-	  <li><a onclick="highlite(this);" href="create_bill.php">Create bill</a></li>
-	  <li><a onclick="highlite(this);" href="create_challan.php">Create challan</a></li>
-	</ul>
- </div>
+<div class="horizontal_menu" style="float:left; text-align:center; margin-left: 25%;">
+    <nav class="navecation"> 
+      <ul id="navv">
+        <li><a class="menu"  href="create_quotation.php">Create quotation</a></li>
+        <li><a class="menu" href="order_entry.php">Order Entry</a></li>
+        <li><a class="menu active" href="create_bill.php">Create bill</a></li>
+        <li><a class="menu" href="create_challan.php">Create challan</a></li>
+      </ul>
+    </nav>
+</div>
+
   <span>  
     <div class="page_path" style="float:right; margin-top:-20px;">
           <p id="welcome">
@@ -816,18 +856,37 @@ display:inline;
          
           
     <div class="row">
-      <div class="col-md-12">
-        <h1  style="text-align:center; font-size:20px;"> Bill</h1>
-      </div>
-
         <div class="col-md-12">
-         <h2>order list</h2>
-          <p><span class="glyphicon glyphicon-search search-boxs"></span><input type="text" id="search_user_create_order" placeholder="search" onKeyUp="fnc_search_order();"></p>
-          <div id="data_table_container_order"></div>
+             <!-- modal start -->
+          <!-- Trigger the modal with a button -->
+          <button  type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#myModal">Browse Order</button>
+          <!-- Modal -->
+          <div class="modal fade" id="myModal" role="dialog">
+            <div style="width:90%;" class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                 <h2 style="margin-right:20px;" class="modal-title">Order list</h2>
+                 
+                </div>
+                <div class="modal-body">
+                      
+                        <p style="margin-top:-10px;"><span class="glyphicon glyphicon-search search-boxs"></span><input type="text" id="search_user_create_order" placeholder="search" onKeyUp="fnc_search_order();"></p>
+                    <div style="margin-top:-20px;" id="data_table_container_order"></div>
+              
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+              
+            </div>
+          </div>           
+              <!-- modal end -->  
         </div>
 
       <div class="col-md-12">
-
             <div style="float:right;">
              <div class="input-group">
               <input type="text" class="form-control" id="txt_bill_date" name="txt_bill_date" placeholder="Year-Month-Day">
@@ -911,6 +970,15 @@ display:inline;
              <div class="input-group" style="margin-left:10px;">
               <input type="text" class="form-control" id="txt_to_subject" name="txt_to_subject" placeholder="subject">
               <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk" id="to_sub_red"></span></span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label style="margin-right: 10px;" class="control-label col-sm-1 col-md-1" for="concern">Concern:</label>
+            <div class="col-sm-10 col-md-10">
+             <div class="input-group">
+              <input  type="text" class="form-control" id="txt_to_concern" name="txt_to_concern" placeholder="Dear Sir, hello.....">
+              <span class="input-group-addon"></span>
               </div>
             </div>
           </div>
@@ -1005,7 +1073,23 @@ display:inline;
              
  <p style="text-align:left; margin-top:-6px;font-size:17px;"><b style="float:left;">Taka in word:</b><input class="form-control" style="width:640px;text-align:left;float:left; border:none;background-color:#FFFFFF;border-color:#fff;" disabled type="text" id="takainword" onKeyUp="calculate_hw();"></p>
  <br/>
- <p style="text-align:left; margin-top:-6px;font-size:14px;"><b>Note:</b> Please issue work order and cheque in favor of OH(Out of Home)</p>
+
+
+  <br/>
+ <p style="text-align:left; margin-top:-6px;font-size:14px;"><b>Note:</b> 
+ <div style="margin-top:-40px;">
+<?php
+  
+  foreach ($notes_arr as $key => $note) {
+    ?>
+    <input style="margin-left:-50px; margin-right:-90px;" type="checkbox" name="note" id="note_<?php echo $key; ?>" value="<?php echo $key; ?>"> <?php echo $note; ?><br/>
+    <?php
+  }
+
+?>
+</div>
+ </p>
+
             
 
               <div class="col-sm-5 col-md-offset-5">
@@ -1191,6 +1275,7 @@ function fn_deletebreak_down_tr(rowNo, table_id)
             var   to_com_name =com_lib_array[results['to_company']];
             var   to_address=results['to_address'];
             var   to_subject=results['bill_subject'];
+            var   to_concern=results['dearSir'];
             var   total_amount=results['total_amount'];
             var   vat=results['vat'];
             var   ait=results['ait'];
@@ -1240,7 +1325,8 @@ if(to_desig!="")
       add_desig+
       to_com_name+'<br>'+
       to_address+'<br><br>'+
-      '<b>Subject: </b>' + to_subject+
+      '<b>Subject: </b>' + to_subject+'<br><br>'+
+      to_concern+
       '<table style="margin-top:10px; margin-right:5px; border-collapse:collapse;">'+
         '<thead>'+
           '<tr>'+

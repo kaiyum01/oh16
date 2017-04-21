@@ -55,6 +55,7 @@ function data_send(){
 		    var to_short_company = $("#txt_to_short_name").val();
         var to_address      = $("#txt_to_address").val();
         var to_subject      = $("#txt_to_subject").val();
+        var to_concern      = $("#txt_to_concern").val();        
         var total_amount    = $("#subtotal").val();
         var vat             = $("#vat").val();
 		    var ait             = $("#ait").val();
@@ -70,7 +71,7 @@ function data_send(){
 		var noteStr = noteArray.join(",");
 		//alert(noteStr);return;
 
-        var dataString = '&to_quotation_date='+ to_quotation_date +'&to_name='+ to_name + '&to_designation='+ to_designation + '&to_company='+ to_company + '&to_short_company='+ to_short_company + '&to_address='+ to_address + '&to_subject='+ to_subject + '&total_amount='+ total_amount + '&vat='+ vat + '&ait='+ ait + '&total_with_vat='+ total_with_vat + '&takainword='+ takainword + '&noteStr='+ noteStr;
+        var dataString = '&to_quotation_date='+ to_quotation_date +'&to_name='+ to_name + '&to_designation='+ to_designation + '&to_company='+ to_company + '&to_short_company='+ to_short_company + '&to_address='+ to_address + '&to_subject='+ to_subject + '&total_amount='+ total_amount + '&vat='+ vat + '&ait='+ ait + '&total_with_vat='+ total_with_vat + '&takainword='+ takainword + '&noteStr='+ noteStr + '&to_concern='+ to_concern;
     	//alert(dataString);
 
         var row_count=$('#tbl_quotation_id tbody tr').length;
@@ -117,6 +118,7 @@ function data_send(){
         $("#txt_to_address").val(''); 
         $("#total_with_vat").val('');
         $("#takainword").val('');
+        $("#txt_to_concern").val('');
          show_datas();
       }
     });
@@ -178,6 +180,7 @@ for (var i = 0; i < len; i++) {
          $("#cbo_to_com_name").val(results['to_company']);
          $("#txt_to_address").val(results['to_address']);
          $("#txt_to_subject").val(results['to_quotation_subject']);
+         $("#txt_to_concern").val(results['dearSir']);
          $("#subtotal").val(results['total_amount']);
          $("#vat").val(results['vat']);
 		     $("#ait").val(results['ait']);
@@ -186,9 +189,13 @@ for (var i = 0; i < len; i++) {
 				 $('#update_id').val(results['id']);
 
          var noteData=results['notes'].split(',');
-         for (var i=0; i<noteData.length;i++) {
+         if (noteData[0]>0) { 
+         	for (var i=0; i<noteData.length;i++) {
            document.getElementById("note_"+noteData[i]).checked = true;
          }
+     	}
+     	else{$("input[name='note']:checkbox").prop('checked',false);}
+        
 
 				 $('#save').addClass('disabled', true);			 
 				 $('#update').removeClass('disabled',false);
@@ -201,10 +208,11 @@ for (var i = 0; i < len; i++) {
           var to_designation=results['to_designation'];
           var to_company=results['to_company'];
           var to_address=results['to_address'];
+          var to_concern=results['dearSir'];
           var to_quotation_subject=results['to_quotation_subject'];
           var total_amount=results['total_amount'];
           var vat=results['vat'];
-		  var ait=results['ait'];
+		      var ait=results['ait'];
           var total_amount_with_vat=results['total_amount_with_vat'];
           var takainword=results['total_amount_in_word'];
           //var word=total_amount_with_vat;
@@ -346,6 +354,7 @@ function data_update(){
   var to_company      = $("#cbo_to_com_name").val();
   var to_address      = $("#txt_to_address").val();
   var to_subject      = $("#txt_to_subject").val();
+  var to_concern      = $("#txt_to_concern").val();
   var total_amount    = $("#subtotal").val();
   var vat             = $("#vat").val();
   var ait             = $("#ait").val();
@@ -362,7 +371,7 @@ function data_update(){
     //alert(noteStr);return;
 
 	// Returns successful data submission message when the entered information is stored in database.
-  var dataString = '&to_quotation_date='+ to_quotation_date + '&to_name='+ to_name + '&to_designation='+ to_designation + '&to_company='+ to_company + '&to_address='+ to_address + '&to_subject='+ to_subject + '&total_amount='+ total_amount + '&vat='+ vat + '&ait='+ ait + '&total_with_vat='+ total_with_vat + '&takainword='+ takainword + '&update_id='+ update_id + '&noteStr='+ noteStr ;
+  var dataString = '&to_quotation_date='+ to_quotation_date + '&to_name='+ to_name + '&to_designation='+ to_designation + '&to_company='+ to_company + '&to_address='+ to_address + '&to_subject='+ to_subject + '&total_amount='+ total_amount + '&vat='+ vat + '&ait='+ ait + '&total_with_vat='+ total_with_vat + '&takainword='+ takainword + '&update_id='+ update_id + '&noteStr='+ noteStr + '&to_concern='+ to_concern;
  
   var row_count=$('#tbl_quotation_id tbody tr').length;
   //alert(row_count);return;
@@ -410,6 +419,7 @@ function data_update(){
         $("#txt_to_address").val(''); 
         $("#total_with_vat").val('');
         $("#takainword").val('');
+        $("#txt_to_concern").val('');
          show_datas();
   			$('#save').removeClass('disabled',false);			 
   			$('#update').addClass('disabled', true);
@@ -558,18 +568,14 @@ $(window).resize(function() {
 //// scrolling table list view END
 </script>
 <!-- Horizontal menu js -->
-<script type="text/javascript">
-var current = document.getElementById('default');
+<script>
+  $(document).ready(function(){
+  $('ul li a').click(function(){
+    $('li a').removeClass("active");
+    $(this).addClass("active");
+});
+});
 
-  function highlite(el)
-  {
-     if (current != null)
-     {
-         current.className = "";
-     }
-     el.className = "highlite";
-     current = el;
-  }
 </script> 
 <style type="text/css">
 .sidenav {
@@ -627,25 +633,29 @@ var current = document.getElementById('default');
   font-size: 12px;
 }
 /* horizontal menu style */
-#navv {
-	width:100%;
-	list-style:none;
-	margin-left:200px;
+nav ul li{
+  list-style:none;
+  float:left;
+  padding-right:2px;
 }
-#navv li{
-display:inline;
+nav ul li a{
+  text-decoration:none;
+  color:#222;
+  background-color:#ccc;
+  padding:8px 8px;
+  text-decoration: none !important;
 }
-#navv a {
-	color:black;
-	text-decoration:none;
-	outline:0;
-	background-color:#CCCCCC;
-	padding:10px;
+nav ul li a:hover{
+  background-color: black;
+  color:white;
+  }
+.active{
+  background-color:#d90000;
+  color:#fff;
 }
-#navv a:active, #navv a:focus, #navv a:hover {
-	color:red; 
+.activee{
+  background-color:#000;
 }
-
 </style>
 </head>
 
@@ -679,7 +689,7 @@ display:inline;
             </div>-->
           </div>
          <div class="dropdown">
-            <a href="commercial_home.php"><button class="dropbtn">commercial</button></a>
+            <a href="commercial_home.php"><button class="dropbtn activee">commercial</button></a>
             <!--<div class="dropdown-content">
               <a href="#">Link 1</a>
               <a href="#">Link 2</a>
@@ -718,13 +728,15 @@ display:inline;
   </div>
   <span style="font-size:20px;cursor:pointer; float:left;" onClick="openNav()">&#9776; menu</span>
   
-  <div class="horizontal_menu" style="float:left; text-align:center;">  
-	<ul id="navv">
-	  <li><a id="default" class="highlite" onClick="highlite(this);" href="create_quotation.php">Create quotation</a></li>
-	  <li><a onClick="highlite(this);" href="order_entry.php">Order Entry</a></li>
-	  <li><a onClick="highlite(this);" href="create_bill.php">Create bill</a></li>
-	  <li><a onClick="highlite(this);" href="create_challan.php">Create challan</a></li>
-	</ul>
+<div class="horizontal_menu" style="float:left; text-align:center; margin-left: 25%;">
+  <nav class="navecation"> 
+    <ul id="navv">
+      <li><a class="menu active"  href="create_quotation.php">Create quotation</a></li>
+      <li><a class="menu" href="order_entry.php">Order Entry</a></li>
+      <li><a class="menu" href="create_bill.php">Create bill</a></li>
+      <li><a class="menu" href="create_challan.php">Create challan</a></li>
+    </ul>
+  </nav>
 </div>
   
   <span>  
@@ -834,6 +846,16 @@ display:inline;
              <div class="input-group" style="margin-left:10px;">
               <input type="text" class="form-control" id="txt_to_subject" name="txt_to_subject" placeholder="subject">
               <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk" id="to_sub_red"></span></span>
+              </div>
+            </div>
+          </div>
+          <br>
+           <div class="form-group">
+            <label style="margin-right: 10px;" class="control-label col-sm-1 col-md-1" for="concern">Concern:</label>
+            <div class="col-sm-10 col-md-10">
+             <div class="input-group">
+              <input  type="text" class="form-control" id="txt_to_concern" name="txt_to_concern" placeholder="Dear Sir, hello.....">
+              <span class="input-group-addon"></span>
               </div>
             </div>
           </div>
@@ -1178,9 +1200,10 @@ function fn_deletebreak_down_tr(rowNo, table_id)
             var   to_com_name =com_lib_array[results['to_company']];
             var   to_address=results['to_address'];
             var   to_subject=results['to_quotation_subject'];
+            var   to_concern=results['dearSir'];
             var   total_amount=results['total_amount'];
             var   vat=results['vat'];
-			var   ait=results['ait'];
+			       var   ait=results['ait'];
             var   total_amount_with_vat=results['total_amount_with_vat'];
             var   takainword=results['total_amount_in_word'];
 
@@ -1235,9 +1258,10 @@ if(to_desig!="")
       add_desig+
       to_com_name+'<br>'+
       to_address+'<br><br>'+
-      '<b>Subject: </b>' + to_subject+
+      '<b>Subject: </b>' + to_subject+'<br><br>'+
+      to_concern+'<br>'+    
       '<table style="margin-top:10px;border-collapse:collapse;">'+
-        '<thead>'+
+        '<thead style="border-top:1px solid black;">'+
           '<tr>'+
             '<th style="width:50px;text-align:center;border:1px solid black;">SL</th>'+
             '<th style="width:350px;text-align:center;border:1px solid black;">Particulars</th>'+

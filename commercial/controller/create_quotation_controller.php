@@ -30,6 +30,7 @@ if(	isset($_POST['action']) &&
 	isset($_POST['to_short_company'])&&
 	isset($_POST['to_address']) &&
 	isset($_POST['to_subject']) &&
+	isset($_POST['to_concern']) &&
 	isset($_POST['total_amount']) &&
 	isset($_POST['vat']) && 
 	isset($_POST['ait']) &&
@@ -47,6 +48,7 @@ if(	isset($_POST['action']) &&
 	$to_short_company2	=$_POST['to_short_company'];
 	$to_address2		=$_POST['to_address'];
 	$to_subject2		=$_POST['to_subject'];
+	$to_concern2		=$_POST['to_concern'];
 	$total_amount2		=$_POST['total_amount'];
 	$vat2				=$_POST['vat'];
 	$ait2				=$_POST['ait'];
@@ -63,8 +65,8 @@ if(	isset($_POST['action']) &&
 	$field_array_cus_lc = "mst_id,item_name,width_feet,width_inch,height_feet,height_inch,total_sqft,price_per_unit,q_qty,amount,inserted_by,insert_date";
 	if($action_save=="save_data")
 	{
-	  	$query = mysql_query("insert into com_create_quotation_mst(to_name,to_designation,to_company,to_address,to_quotation_subject,total_amount,vat,ait,total_amount_with_vat,quotation_date,total_amount_in_word,quotation_number_generate,notes,insert_date,inserted_by) values
-		('$to_name2','$to_designation2','$to_company2','$to_address2','$to_subject2','$total_amount2','$vat2','$ait2','$total_with_vat2','$to_quotation_date2','$takainword2','$quotation_number_generate','$noteStr','$insert_and_update_date','$login_session_user_id')");
+	  	$query = mysql_query("insert into com_create_quotation_mst(to_name,to_designation,to_company,to_address,to_quotation_subject,total_amount,vat,ait,total_amount_with_vat,quotation_date,total_amount_in_word,quotation_number_generate,notes,dearSir,insert_date,inserted_by) values
+		('$to_name2','$to_designation2','$to_company2','$to_address2','$to_subject2','$total_amount2','$vat2','$ait2','$total_with_vat2','$to_quotation_date2','$takainword2','$quotation_number_generate','$noteStr','$to_concern2','$insert_and_update_date','$login_session_user_id')");
 	  
 		$id= return_next_id("id", "com_create_quotation_mst", "1");
 		$id=$id-1;
@@ -240,6 +242,7 @@ if(	isset($_POST['action']) &&
 	$to_company2		=$_POST['to_company'];
 	$to_address2		=$_POST['to_address'];
 	$to_subject2		=$_POST['to_subject'];
+	$to_concern2		=$_POST['to_concern'];
 	$total_amount2		=$_POST['total_amount'];
 	$vat2				=$_POST['vat'];
 	$ait2				=$_POST['ait'];
@@ -254,7 +257,7 @@ if(	isset($_POST['action']) &&
 	if($action_update=="update_data")
 	{
 		$sql_delete = mysql_query("DELETE FROM com_create_quotation_dtls WHERE mst_id=$update_id2");
-	  	$query = mysql_query("update com_create_quotation_mst SET to_name='$to_name2',to_designation='$to_designation2',to_company='$to_company2',to_address='$to_address2',to_quotation_subject='$to_subject2',total_amount='$total_amount2',vat='$vat2',ait='$ait2',total_amount_with_vat='$total_with_vat2',quotation_date='$to_quotation_date2',total_amount_in_word='$takainword2',notes='$noteStr',update_date='$insert_and_update_date',updated_by='$login_session_user_id' where id='$update_id2'");
+	  	$query = mysql_query("update com_create_quotation_mst SET to_name='$to_name2',to_designation='$to_designation2',to_company='$to_company2',to_address='$to_address2',to_quotation_subject='$to_subject2',total_amount='$total_amount2',vat='$vat2',ait='$ait2',total_amount_with_vat='$total_with_vat2',quotation_date='$to_quotation_date2',total_amount_in_word='$takainword2',notes='$noteStr',dearSir='$to_concern2',update_date='$insert_and_update_date',updated_by='$login_session_user_id' where id='$update_id2'");
 	  	$data_array_cus_lc="";
 		//dtls
 			for($i=1; $i<=$tot_row_dtls; $i++)

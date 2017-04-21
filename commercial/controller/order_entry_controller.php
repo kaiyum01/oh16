@@ -328,14 +328,14 @@ if(isset($_GET['action'])){
 		$result=mysql_query("select id,quotation_number_generate,quotation_date,to_name,to_company,to_quotation_subject,total_amount_with_vat from com_create_quotation_mst where is_deleted=0 and status_active=1 order by id DESC");
 		?>
 		<table class="table table-hover scroll">
-		<thead>
+		<thead style="font-size:12px;">
 		  <tr>		 
 			<th>SL</th> 	
 			<th>Quotation No</th>
 			<th>Quotation Date</th>
 			<th>person name</th> 	
 			<th>company Name</th> 	
-			<th>Quotation subject</th>
+			<th>Quot. subject</th>
 			<th>Total Amount</th>
 			<th>Action</th>
 		  </tr>
@@ -354,7 +354,7 @@ if(isset($_GET['action'])){
 		<td align="center"><?php echo $return_lib_company_arr[$data[4]]; ?></td>
 		<td align="center"><?php echo $data[5]; ?></td>
 		<td align="center"><?php echo $data[6]; ?></td>		
-        <td align="center"><span class="glyphicon glyphicon-import" onclick="get_data_from_list_quotation(<?php echo $data[0]; ?>)";></span></td>
+        <td align="center" data-dismiss="modal"><span class="glyphicon glyphicon-import" onclick="get_data_from_list_quotation(<?php echo $data[0]; ?>)";></span></td>
       </tr>
    <?php
   	}
@@ -377,14 +377,14 @@ if(isset($_GET['action']) && isset($_GET['search_value1'])){
 		$result=mysql_query("select id,quotation_number_generate,quotation_date,to_name,to_company,to_quotation_subject,total_amount_with_vat from com_create_quotation_mst where is_deleted=0 and status_active=1 and quotation_number_generate='$search_value2' order by id DESC");
 		?>
 		<table class="table table-hover scroll">
-    <thead>
+    <thead style="font-size:12px;">
       <tr>		 
 		<th>SL</th> 	
 		<th>Quotation No</th>
 		<th>Quotation Date</th>
 		<th>person name</th> 	
 		<th>company Name</th> 	
-		<th>Quotation subject</th>
+		<th>Quot. subject</th>
 		<th>Total Amount</th>
 		<th>Action</th>
 	  </tr>
@@ -404,7 +404,7 @@ if(isset($_GET['action']) && isset($_GET['search_value1'])){
 		<td align="center"><?php echo $return_lib_company_arr[$data[4]]; ?></td>
 		<td align="center"><?php echo $data[5]; ?></td>
 		<td align="center"><?php echo $data[6]; ?></td>
-        <td align="center"><span class="glyphicon glyphicon-import" onclick="get_data_from_list_quotation(<?php echo $data[0]; ?>)";></span></td>
+        <td align="center" data-dismiss="modal"><span class="glyphicon glyphicon-import" onclick="get_data_from_list_quotation(<?php echo $data[0]; ?>)";></span></td>
       </tr>
    <?php
   	}

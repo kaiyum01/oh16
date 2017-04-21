@@ -48,18 +48,14 @@ function closeNav() {
 }
 </script>
 <!-- Horizontal menu js -->
-<script type="text/javascript">
-var current = document.getElementById('default');
+<script>
+  $(document).ready(function(){
+  $('ul li a').click(function(){
+    $('li a').removeClass("active");
+    $(this).addClass("active");
+});
+});
 
-  function highlite(el)
-  {
-     if (current != null)
-     {
-         current.className = "";
-     }
-     el.className = "highlite";
-     current = el;
-  }
  </script>
 <style type="text/css">
 .sidenav {
@@ -105,23 +101,28 @@ var current = document.getElementById('default');
   .sidenav a {font-size: 18px;}
 }
 /* horizontal menu style */
-#navv {
-	width:100%;
-	list-style:none;
-	margin-left:280px;
+nav ul li{
+  list-style:none;
+  float:left;
+  padding-right:2px;
 }
-#navv li{
-display:inline;
+nav ul li a{
+  text-decoration:none;
+  color:#222;
+  background-color:#ccc;
+  padding:8px 8px;
+  text-decoration: none !important;
 }
-#navv a {
-	color:black;
-	text-decoration:none;
-	outline:0;
-	background-color:#CCCCCC;
-	padding:10px;
+nav ul li a:hover{
+  background-color: black;
+  color:white;
+  }
+.active{
+  background-color:#d90000;
+  color:#fff;
 }
-#navv a:active, #navv a:focus, #navv a:hover {
-	color:red; 
+.activee{
+  background-color:#000;
 }
 </style>
 </head>
@@ -148,7 +149,7 @@ display:inline;
             </div>-->
           </div>
 	       <div class="dropdown">
-            <a href="library_home.php"><button class="dropbtn">library</button></a>
+            <a href="library_home.php"><button class="dropbtn activee">library</button></a>
             <!--<div class="dropdown-content">
               <a href="#">Link 1</a>
               <a href="#">Link 2</a>
@@ -192,12 +193,15 @@ display:inline;
   </div>
   <span style="font-size:20px;cursor:pointer; float:left;" onClick="openNav()">&#9776; menu</span>
   
-    <div class="horizontal_menu" style="float:left; text-align:center;">  
-	<ul id="navv">
-	  <li><a id="default" class="highlite" onclick="highlite(this);" href="task_entry.php">Task Entry</a></li>
-	  <li><a onclick="highlite(this);" href="client_entry.php">Client Entry</a></li>
-	</ul>
-  </div>
+<div class="horizontal_menu" style="float:left; text-align:center; margin-left: 35%;">
+    <nav class="navecation"> 
+      <ul id="navv">
+        <li><a class="menu "  href="task_entry.php">Task Entry</a></li>
+        <li><a class="menu " href="client_entry.php">Client Entry</a></li>
+      </ul>
+    </nav>
+</div>
+
   
   <span>  
     <div class="page_path" style="float:right; margin-top:-20px;">
@@ -210,12 +214,20 @@ display:inline;
 
 </div>
 
-
-
-
-
 <h1 style="text-align:center;">library home</h1>
 
+  <div class="col-md-12">
+    <div class="col-md-2"> 
+    </div>
+    <div class="col-md-8">
+     <div style="margin-top: 18%;" class="jumbotron">
+      <h1 style="color: #fff; text-align: center;">Oh library module</h1>
+     </div>
+    </div>
+    <div class="col-md-2">
+    </div>
+  </div>
+  
   
 </div>
 			

@@ -506,19 +506,15 @@ $(window).resize(function() {
 //// scrolling table list view END
 </script>
 <!-- Horizontal menu js -->
-<script type="text/javascript">
-var current = document.getElementById('default');
+<script>
+  $(document).ready(function(){
+  $('ul li a').click(function(){
+    $('li a').removeClass("active");
+    $(this).addClass("active");
+});
+});
 
-  function highlite(el)
-  {
-     if (current != null)
-     {
-         current.className = "";
-     }
-     el.className = "highlite";
-     current = el;
-  }
-</script> 
+</script>
 <style type="text/css">
 .sidenav {
     height: 100%;
@@ -574,25 +570,31 @@ var current = document.getElementById('default');
   margin: 2px;
 }
 /* horizontal menu style */
-#navv {
-	width:100%;
-	list-style:none;
-	margin-left:200px;
-}
-#navv li{
-display:inline;
-}
-#navv a {
-	color:black;
-	text-decoration:none;
-	outline:0;
-	background-color:#CCCCCC;
-	padding:10px;
-}
-#navv a:active, #navv a:focus, #navv a:hover {
-	color:red; 
-}
 
+nav ul li{
+  list-style:none;
+  float:left;
+  padding-right:2px;
+}
+nav ul li a{
+  text-decoration:none;
+  color:#222;
+  background-color:#ccc;
+  padding:8px 8px;
+  text-decoration: none !important;
+}
+nav ul li a:hover{
+  background-color: black;
+  color:white;
+  }
+.active{
+  background-color:#d90000;
+  color:#fff;
+
+}
+.activee{
+  background-color:#000;
+}
 </style>
 </head>
 
@@ -626,7 +628,7 @@ display:inline;
             </div>-->
           </div>
          <div class="dropdown">
-            <a href="commercial_home.php"><button class="dropbtn">commercial</button></a>
+            <a href="commercial_home.php"><button class="dropbtn activee">commercial</button></a>
             <!--<div class="dropdown-content">
               <a href="#">Link 1</a>
               <a href="#">Link 2</a>
@@ -663,15 +665,19 @@ display:inline;
      
   </div>
   <span style="font-size:20px;cursor:pointer; float:left;" onClick="openNav()">&#9776; open</span>
-  <div class="horizontal_menu" style="float:left; text-align:center;">  
-	<ul id="navv">
-	  <li><a id="default" class="highlite" onclick="highlite(this);" href="create_quotation.php">Create quotation</a></li>
-	  <li><a onclick="highlite(this);" href="order_entry.php">Order Entry</a></li>
-	  <li><a onclick="highlite(this);" href="create_bill.php">Create bill</a></li>
-	  <li><a onclick="highlite(this);" href="create_challan.php">Create challan</a></li>
-	</ul>
- </div>
   
+<div class="horizontal_menu" style="float:left; text-align:center; margin-left: 25%;">
+    <nav class="navecation"> 
+      <ul id="navv">
+        <li><a class="menu "  href="create_quotation.php">Create quotation</a></li>
+        <li><a class="menu active" href="order_entry.php">Order Entry</a></li>
+        <li><a class="menu" href="create_bill.php">Create bill</a></li>
+        <li><a class="menu" href="create_challan.php">Create challan</a></li>
+      </ul>
+    </nav>
+</div>
+
+
   <span>  
     <div class="page_path" style="float:right; margin-top:-20px;">
           <p id="welcome">
@@ -689,17 +695,37 @@ display:inline;
 
 <div class="container-fluid">
   <div class="col-md-12">
-
-
-            <div class="col-md-12">
-             <h2>Quotation list</h2>
-              <p><span class="glyphicon glyphicon-search search-boxs"></span><input type="text" id="search_user_create_quotation" placeholder="search" onKeyUp="fnc_search_quotation();"></p>
-              <div id="data_table_container_quotation"></div>
+      <div class="col-md-12">
+            <!-- modal start -->
+        <!-- Trigger the modal with a button -->
+        <button  type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#myModal">Browse Quotation</button>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+               <h2 style="margin-right:20px;" class="modal-title">Quotation list</h2>
+               
+              </div>
+              <div class="modal-body">
+                      <p style="margin-top:-10px;"><span class="glyphicon glyphicon-search search-boxs"></span><input type="text" id="search_user_create_quotation" placeholder="search" onKeyUp="fnc_search_quotation();"></p>
+                      <div style="margin-top:-20px;" id="data_table_container_quotation"></div>
+                                    
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
             </div>
+            
+          </div>
+        </div>           
+              <!-- modal end -->  
+     </div>
 
     <form class="form-horizontal"> 
-      <div class="col-md-6">
-        <form class="form-horizontal">
+      <div class="col-md-6">    
           <div class="form-group">
             <label class="control-label col-sm-4" for="ord-no">Order No:</label>
             <div class="col-sm-8">

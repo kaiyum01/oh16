@@ -53,6 +53,12 @@ header('Location: index.php'); // Redirecting To Home Page
   // });
 }
   </script>
+<style>
+.activee{
+  background-color:#000;
+}
+
+</style>
 </head>
 
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60" onLoad="show_datas()";>
@@ -69,7 +75,7 @@ header('Location: index.php'); // Redirecting To Home Page
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
           <div class="dropdown">
-             <a href="home.php"><button class="dropbtn">dashboard</button></a>
+             <a href="home.php"><button class="dropbtn activee">dashboard</button></a>
             <!--<div class="dropdown-content">
               <a href="#">Link 1</a>
               <a href="#">Link 2</a>

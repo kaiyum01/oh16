@@ -25,6 +25,7 @@ include('../../include/message_function.php');
 if(	isset($_POST['action']) &&
 	isset($_POST['to_challan_date']) &&
  	isset($_POST['to_subject']) &&
+ 	isset($_POST['to_concern']) &&
  	isset($_POST['hidden_quotation_id'])&&
 	isset($_POST['hidden_short_name'])&&
  	isset($_POST['hidden_order_id'])
@@ -34,6 +35,7 @@ if(	isset($_POST['action']) &&
 	$action_save		=$_POST['action'];
 	$to_challan_date2		=$_POST['to_challan_date'];
 	$to_subject2		=$_POST['to_subject'];
+	$to_concern2		=$_POST['to_concern'];
 	$hidden_quotation_id2=$_POST['hidden_quotation_id'];
 	$hidden_order_id2	=$_POST['hidden_order_id'];
 	$hidden_short_name2	=$_POST['hidden_short_name'];
@@ -47,8 +49,8 @@ if(	isset($_POST['action']) &&
 	*/
 	if($action_save=="save_data")
 	{
-	  	$query = mysql_query("insert into com_create_challan_mst(quotation_mst_id,order_mst_id,challan_number_generate,challan_subject,challan_date,insert_date,inserted_by) 
-	  		values('$hidden_quotation_id2','$hidden_order_id2','$challan_number_generate','$to_subject2','$to_challan_date2','$insert_and_update_date','$login_session_user_id')");
+	  	$query = mysql_query("insert into com_create_challan_mst(quotation_mst_id,order_mst_id,challan_number_generate,challan_subject,challan_date,dearSir,insert_date,inserted_by) 
+	  		values('$hidden_quotation_id2','$hidden_order_id2','$challan_number_generate','$to_subject2','$to_challan_date2','$to_concern2','$insert_and_update_date','$login_session_user_id')");
 	  	/*
 	  	$data_array_cus_lc="";
 		//dtls
@@ -87,17 +89,19 @@ if(	isset($_POST['action']) &&
 if(	isset($_POST['action']) &&
 	isset($_POST['to_challan_date']) &&
 	isset($_POST['to_subject']) &&
+	isset($_POST['to_concern']) &&
 	isset($_POST['update_id1'])  
  	){
 	$action_update		=$_POST['action'];
 	$to_challan_date2		=$_POST['to_challan_date'];
 	$to_subject2		=$_POST['to_subject'];
+	$to_concern2		=$_POST['to_concern'];
 	$update_id2			=$_POST['update_id1'];
 
 	if($action_update=="update_data")
 	{
 	//update query 
-	  $query_update = mysql_query("update com_create_challan_mst SET challan_subject='$to_subject2',challan_date='$to_challan_date2',update_date='$insert_and_update_date',updated_by='$login_session_user_id' where id='$update_id2'");
+	  $query_update = mysql_query("update com_create_challan_mst SET challan_subject='$to_subject2',challan_date='$to_challan_date2',dearSir='$to_concern2',update_date='$insert_and_update_date',updated_by='$login_session_user_id' where id='$update_id2'");
 	  if($query_update==1){
 	  	echo $msg_update;
 		//echo "<h4>Success:</h4> Data update <b>user successfully</b>!";
@@ -201,7 +205,7 @@ if(isset($_GET['action'])){
 		 
 		$idd=$_GET['idd'];
 		//(to_name,to_designation,to_company,to_address,to_quotation_subject,total_amount,vat,total_amount_with_vat,quotation_date,total_amount_in_word,quotation_number_generate,insert_date,inserted_by
-		$sql= mysql_query("select a.id as challan_id,a.challan_subject,a.challan_date,a.quotation_mst_id as quotation_id,b.to_name,b.to_designation,b.to_company,b.to_address,b.total_amount,b.vat,b.total_amount_with_vat,b.total_amount_in_word from com_create_challan_mst a,com_create_quotation_mst b where a.id=$idd and a.quotation_mst_id=b.id");
+		$sql= mysql_query("select a.id as challan_id,a.challan_subject,a.challan_date,a.dearSir,a.quotation_mst_id as quotation_id,b.to_name,b.to_designation,b.to_company,b.to_address,b.total_amount,b.vat,b.total_amount_with_vat,b.total_amount_in_word from com_create_challan_mst a,com_create_quotation_mst b where a.id=$idd and a.quotation_mst_id=b.id");
 		
 		while($result = mysql_fetch_assoc($sql)) {
 			echo json_encode($result);
@@ -320,7 +324,7 @@ if(isset($_GET['action'])){
 		$result=mysql_query("select id,order_number_generate,order_date,client_name,task_name,quotation_no,quotation_date,job_number_generate,production_status,delivery_date,bill_status from com_order_entry where is_deleted=0 and status_active=1 order by id DESC");
 		?>
 		<table class="table table-hover scroll">
-		<thead>
+		<thead style="font-size:12px;">
 		  <tr>		 
 			<th>SL</th> 	
 			<th>Order No</th>
@@ -354,7 +358,7 @@ if(isset($_GET['action'])){
 		<td align="center"><?php echo $production_status[$data[8]]; ?></td>
 		<td align="center"><?php echo change_date_format($data[9],"dd-mm-yyyy","-",''); ?></td>
 		<td align="center"><?php echo $bill_status[$data[10]]; ?></td>
-        <td align="center"><span class="glyphicon glyphicon-import" onclick="get_data_from_list_order(<?php echo $data[0]; ?>)";></span></td>
+        <td align="center"  data-dismiss="modal"><span class="glyphicon glyphicon-import" onclick="get_data_from_list_order(<?php echo $data[0]; ?>)";></span></td>
       </tr>
    <?php
   	}
@@ -377,7 +381,7 @@ if(isset($_GET['action']) && isset($_GET['search_value1'])){
 		$result=mysql_query("select id,order_number_generate,order_date,client_name,task_name,quotation_no,quotation_date,job_number_generate,production_status,delivery_date,bill_status from com_order_entry where is_deleted=0 and status_active=1 and order_number_generate='$search_value2' order by id DESC");
 		?>
 		<table class="table table-hover">
-    <thead>
+    <thead style="font-size:12px;">
       <tr>		 
 		<th>SL</th> 
 			<th>Order No</th>
@@ -412,7 +416,7 @@ if(isset($_GET['action']) && isset($_GET['search_value1'])){
 		<td align="center"><?php echo $production_status[$data[8]]; ?></td>
 		<td align="center"><?php echo change_date_format($data[9],"dd-mm-yyyy","-",''); ?></td>
 		<td align="center"><?php echo $bill_status[$data[10]]; ?></td>
-        <td align="center"><span class="glyphicon glyphicon-import" onclick="get_data_from_list_order(<?php echo $data[0]; ?>)";></span></td>
+        <td align="center"  data-dismiss="modal"><span class="glyphicon glyphicon-import" onclick="get_data_from_list_order(<?php echo $data[0]; ?>)";></span></td>
       </tr>
    <?php
   	}
