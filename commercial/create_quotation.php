@@ -19,8 +19,6 @@ include('../include/kaiyum_function.php');
 include('../include/common_function.php');
 include('../include/array_function.php');
 include('../include/message_function.php');
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,39 +39,26 @@ include('../include/message_function.php');
   <script type="text/javascript" src="../js/jquery.js"></script>
  <!-- <script type="../js/jquery.min.js"></script>-->
   <script type="../js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="../css/jquery_ui.css">
-  <script type="text/javascript" src="../js/jquery_ui.js"></script>
+
 <script type="text/javascript">
 // save data by submit button function
 function data_send(){
   //$(document).ready(function(){  
-  // $("#submit").click(function(){
-        var to_quotation_date  = $("#txt_quotation_date").val(); 
+  // $("#submit").click(function(){ 
         var to_name         = $("#txt_to_name").val();
         var to_designation  = $("#txt_to_desig").val();
         var to_company      = $("#cbo_to_com_name").val();
-		    var to_short_company = $("#txt_to_short_name").val();
+		var to_short_company = $("#txt_to_short_name").val();
         var to_address      = $("#txt_to_address").val();
         var to_subject      = $("#txt_to_subject").val();
-        var to_concern      = $("#txt_to_concern").val();        
         var total_amount    = $("#subtotal").val();
         var vat             = $("#vat").val();
-		    var ait             = $("#ait").val();
+		var ait             = $("#ait").val();
         var total_with_vat  = $("#total_with_vat").val();
         var takainword      = $("#takainword").val();
 
-
-        //notes
-		var noteArray=[];
-		$("input:checkbox[name=note]:checked").each(function(){
-		    noteArray.push($(this).val());
-		});
-		var noteStr = noteArray.join(",");
-		//alert(noteStr);return;
-
-        var dataString = '&to_quotation_date='+ to_quotation_date +'&to_name='+ to_name + '&to_designation='+ to_designation + '&to_company='+ to_company + '&to_short_company='+ to_short_company + '&to_address='+ to_address + '&to_subject='+ to_subject + '&total_amount='+ total_amount + '&vat='+ vat + '&ait='+ ait + '&total_with_vat='+ total_with_vat + '&takainword='+ takainword + '&noteStr='+ noteStr + '&to_concern='+ to_concern;
-    	//alert(dataString);
-
+        var dataString = '&to_name='+ to_name + '&to_designation='+ to_designation + '&to_company='+ to_company + '&to_short_company='+ to_short_company + '&to_address='+ to_address + '&to_subject='+ to_subject + '&total_amount='+ total_amount + '&vat='+ vat + '&ait='+ ait + '&total_with_vat='+ total_with_vat + '&takainword='+ takainword;
+    //alert(dataString);
         var row_count=$('#tbl_quotation_id tbody tr').length;
         //alert(row_count);return;
         var data_dtls="";
@@ -88,17 +73,16 @@ function data_send(){
   
         }
           
-/*   if(to_name==''||to_designation==''){
+   if(to_name==''||to_designation==''){
           $("#msg_failed").css({"display":"block","background-color":"#EE5269"}).fadeOut(8000).html(" You have must fill out <b>red * mark</b>!"); 
-  }*/
+  }
   if(to_name==''){ $("#to_name_red").css("color","#EE5269" );}else{ $("#to_name_red").css("color","green" );}
-  //if(to_designation==''){ $("#to_desi_red").css("color","#EE5269" );}else{ $("#to_desi_red").css("color","green" );}
-  if(to_quotation_date==''){$("#quotation_date_red").css("color","#EE5269" );}else{$("#quotation_date_red").css("color","green" );}
+  if(to_designation==''){ $("#to_desi_red").css("color","#EE5269" );}else{ $("#to_desi_red").css("color","green" );}
   if(to_address==''){ $("#to_address_red").css("color","#EE5269" );}else{ $("#to_address_red").css("color","green" );}
   if(to_subject==''){ $("#to_sub_red").css("color","#EE5269" );}else{ $("#to_sub_red").css("color","green" );}
   if(total_with_vat==''){ $("#total_with_vat").css({"background-color":"#EE5269","color":"#fff"});}else{ $("#total_with_vat").css({"background-color":"green","color":"#fff"} );}
   if(takainword==''){ $("#takainword").css({"background-color":"#EE5269","color":"#fff"});}else{ $("#takainword").css({"background-color":"green","color":"#fff"} );}
-  if(to_name=='' || to_quotation_date=='' || to_address=='' || to_subject=='' || total_with_vat=='' || takainword==''){
+  if(to_name==''|| to_designation=='' || to_address=='' || to_subject=='' || total_with_vat=='' || takainword==''){
      $("#msg_failed").css({"display":"block","background-color":"#EE5269"}).fadeOut(8000).html(" You have must fill out <b>red mark</b>!"); 
   }
   else
@@ -113,12 +97,10 @@ function data_send(){
       { 
         $("#msg_success").css({"display":"block","background-color":"#1E8A2B"}).fadeOut(8000).html(result);
         $("#txt_to_name").val('');
-        $("#txt_quotation_date").val('');       
         $("#txt_to_desig").val('');
         $("#txt_to_address").val(''); 
         $("#total_with_vat").val('');
         $("#takainword").val('');
-        $("#txt_to_concern").val('');
          show_datas();
       }
     });
@@ -175,55 +157,37 @@ for (var i = 0; i < len; i++) {
     console.log(results[i].phone);
 }*/
          $("#txt_to_name").val(results['to_name']);
-         $("#txt_quotation_date").val(results['quotation_date']); 
          $("#txt_to_desig").val(results['to_designation']);
          $("#cbo_to_com_name").val(results['to_company']);
          $("#txt_to_address").val(results['to_address']);
          $("#txt_to_subject").val(results['to_quotation_subject']);
-         $("#txt_to_concern").val(results['dearSir']);
          $("#subtotal").val(results['total_amount']);
          $("#vat").val(results['vat']);
-		     $("#ait").val(results['ait']);
+		 $("#ait").val(results['ait']);
          $("#total_with_vat").val(results['total_amount_with_vat']);
          $("#takainword").val(results['total_amount_in_word']);
 				 $('#update_id').val(results['id']);
-
-         var noteData=results['notes'].split(',');
-         if (noteData[0]>0) { 
-         	for (var i=0; i<noteData.length;i++) {
-           document.getElementById("note_"+noteData[i]).checked = true;
-         }
-     	}
-     	else{$("input[name='note']:checkbox").prop('checked',false);}
-        
-
 				 $('#save').addClass('disabled', true);			 
 				 $('#update').removeClass('disabled',false);
-				 $('#csv_generate').removeClass('disabled',false);
          $('#print').removeClass('disabled',false);
 
           //for print data
           var to_name= results['to_name'];
-          var to_quotation_date= results['quotation_date'];
           var to_designation=results['to_designation'];
           var to_company=results['to_company'];
           var to_address=results['to_address'];
-          var to_concern=results['dearSir'];
           var to_quotation_subject=results['to_quotation_subject'];
           var total_amount=results['total_amount'];
           var vat=results['vat'];
-		      var ait=results['ait'];
+		  var ait=results['ait'];
           var total_amount_with_vat=results['total_amount_with_vat'];
           var takainword=results['total_amount_in_word'];
           //var word=total_amount_with_vat;
-          
-	
 			}
 	});
 		//});
  //});
 }
-
 
 //show details form
    function show_detail_form(mst_id)
@@ -247,26 +211,14 @@ for (var i = 0; i < len; i++) {
       var id = row[0];
       var mst_id = row[1];
       var item_name = row[2];
-      var width_fee = row[3];
-      var width_inc = row[4];   
-      var height_fee = row[5];
-      var height_inc = row[6];
+      var width_feet = row[3];
+      var width_inch = row[4];
+      var height_feet = row[5];
+      var height_inch = row[6];
       var total_sqft = row[7];
       var price_per_unit = row[8];
       var amount = row[9];
-	  var q_qtyy = row[16];
-
-	  var width_feet ="";
-      var width_inch ="";
-      var height_feet ="";
-      var height_inch ="";
-      var q_qty ="";
-
-      if(width_fee>0){width_feet=width_fee} else {}
-      if(width_inc>0){width_inch=width_inc} else {}
-      if(height_fee>0){height_feet=height_fee} else {}
-      if(height_inc>0){height_inch=height_inc} else {}
-      if(q_qtyy>0){q_qty=q_qtyy} else {}
+	  var q_qty = row[16];
   //add_break_down_tr(sl++);
 var incentive_counter=1;
 //alert (incentive_counter);
@@ -293,15 +245,15 @@ var incentive_counter=1;
                 //'<input  class="form-control" type="text" id="txtItem_'+sll+'" name="txtItem[]" value="'+item_name+'" placeholder="particular name">'+
               '</td>'+
               '<td>'+
-                '<input style="width:55px;float:left;" class="form-control" type="text" id="txtHeightFeet_'+sll+'" name="txtHeightFeet_1[]" value="'+width_feet+'"  onKeyUp="calculate_hw();" placeholder="feet">'+
-                '<input style="width:55px;" class="form-control" type="text" id="txtHeightInch_'+sll+'" name="txtHeightInch_1[]" value="'+width_inch+'"  onKeyUp="calculate_hw();" placeholder="inch">'+
+                '<input style="width:65px;float:left;" class="form-control" type="text" id="txtHeightFeet_'+sll+'" name="txtHeightFeet_1[]" value="'+width_feet+'"  onKeyUp="calculate_hw();" placeholder="feet">'+
+                '<input style="width:65px;" class="form-control" type="text" id="txtHeightInch_'+sll+'" name="txtHeightInch_1[]" value="'+width_inch+'"  onKeyUp="calculate_hw();" placeholder="inch">'+
               '</td>'+
               '<td>'+
-                '<input style="width:55px;float:left;" class="form-control" type="text" id="txtWidthFeet_'+sll+'" name="txtWidthFeet_1[]" value="'+height_feet+'"  onKeyUp="calculate_hw();" placeholder="feet">'+
-                '<input style="width:55px;" class="form-control" type="text" id="txtWidthInch_'+sll+'" name="txtWidthInch_1[]" value="'+height_inch+'"  onKeyUp="calculate_hw();" placeholder="inch">'+
+                '<input style="width:65px;float:left;" class="form-control" type="text" id="txtWidthFeet_'+sll+'" name="txtWidthFeet_1[]" value="'+height_feet+'"  onKeyUp="calculate_hw();" placeholder="feet">'+
+                '<input style="width:65px;" class="form-control" type="text" id="txtWidthInch_'+sll+'" name="txtWidthInch_1[]" value="'+height_inch+'"  onKeyUp="calculate_hw();" placeholder="inch">'+
               '</td>'+
               '<td>'+
-                '<input class="form-control" type="text" id="txtSqrft_'+sll+'" name="txtSqrft[]" style="width:110px;text-align:right;" value="'+total_sqft+'"  onKeyUp="calculate_hw();" placeholder="total sqft" >'+
+                '<input class="form-control" type="text" id="txtSqrft_'+sll+'" name="txtSqrft[]" style="width:110px;text-align:right;" value="'+total_sqft+'"  onKeyUp="calculate_hw();" placeholder="total sqft" readonly>'+
               '</td>'+
               '<td>'+
                 '<input class="form-control" type="text" id="txtPrice_'+sll+'" name="txtPrice[]" style="width:110px;text-align:right;" value="'+price_per_unit+'" onKeyUp="calculate_hw();" placeholder="price per unit">'+
@@ -348,30 +300,19 @@ var incentive_counter=1;
 function data_update(){
 	//$(document).ready(function(){  
 	// $("#submit").click(function(){
-  var to_quotation_date  = $("#txt_quotation_date").val();
   var to_name         = $("#txt_to_name").val();
   var to_designation  = $("#txt_to_desig").val();
   var to_company      = $("#cbo_to_com_name").val();
   var to_address      = $("#txt_to_address").val();
   var to_subject      = $("#txt_to_subject").val();
-  var to_concern      = $("#txt_to_concern").val();
   var total_amount    = $("#subtotal").val();
   var vat             = $("#vat").val();
   var ait             = $("#ait").val();
   var total_with_vat  = $("#total_with_vat").val();
   var takainword      = $("#takainword").val();
   var update_id 	  = $("#update_id").val();
-
-    //notes
-    var noteArray=[];
-    $("input:checkbox[name=note]:checked").each(function(){
-        noteArray.push($(this).val());
-    });
-    var noteStr = noteArray.join(",");
-    //alert(noteStr);return;
-
 	// Returns successful data submission message when the entered information is stored in database.
-  var dataString = '&to_quotation_date='+ to_quotation_date + '&to_name='+ to_name + '&to_designation='+ to_designation + '&to_company='+ to_company + '&to_address='+ to_address + '&to_subject='+ to_subject + '&total_amount='+ total_amount + '&vat='+ vat + '&ait='+ ait + '&total_with_vat='+ total_with_vat + '&takainword='+ takainword + '&update_id='+ update_id + '&noteStr='+ noteStr + '&to_concern='+ to_concern;
+  var dataString = '&to_name='+ to_name + '&to_designation='+ to_designation + '&to_company='+ to_company + '&to_address='+ to_address + '&to_subject='+ to_subject + '&total_amount='+ total_amount + '&vat='+ vat + '&ait='+ ait + '&total_with_vat='+ total_with_vat + '&takainword='+ takainword + '&update_id='+ update_id;
  
   var row_count=$('#tbl_quotation_id tbody tr').length;
   //alert(row_count);return;
@@ -388,17 +329,16 @@ function data_update(){
 
   }
   //alert(data_dtls);
-/*   if(to_name==''||to_designation==''){
+   if(to_name==''||to_designation==''){
           $("#msg_failed").css({"display":"block","background-color":"#EE5269"}).fadeOut(8000).html(" You have must fill out <b>red * mark</b>!"); 
-  }*/
+  }
   if(to_name==''){ $("#to_name_red").css("color","#EE5269" );}else{ $("#to_name_red").css("color","green" );}
-  //if(to_designation==''){ $("#to_desi_red").css("color","#EE5269" );}else{ $("#to_desi_red").css("color","green" );}
-  if(to_quotation_date==''){$("#quotation_date_red").css("color","#EE5269" );}else{$("#quotation_date_red").css("color","green" );}
+  if(to_designation==''){ $("#to_desi_red").css("color","#EE5269" );}else{ $("#to_desi_red").css("color","green" );}
   if(to_address==''){ $("#to_address_red").css("color","#EE5269" );}else{ $("#to_address_red").css("color","green" );}
   if(to_subject==''){ $("#to_sub_red").css("color","#EE5269" );}else{ $("#to_sub_red").css("color","green" );}
   if(total_with_vat==''){ $("#total_with_vat").css({"background-color":"#EE5269","color":"#fff"});}else{ $("#total_with_vat").css({"background-color":"green","color":"#fff"} );}
   if(takainword==''){ $("#takainword").css({"background-color":"#EE5269","color":"#fff"});}else{ $("#takainword").css({"background-color":"green","color":"#fff"} );}
-  if(to_name=='' || to_quotation_date=='' || to_address=='' || to_subject=='' || total_with_vat=='' || takainword==''){
+  if(to_name==''|| to_designation=='' || to_address=='' || to_subject=='' || total_with_vat=='' || takainword==''){
      $("#msg_failed").css({"display":"block","background-color":"#EE5269"}).fadeOut(8000).html(" You have must fill out <b>red mark</b>!"); 
   }
   else
@@ -414,12 +354,10 @@ function data_update(){
   				 //alert(result);
   			$("#msg_success").css({"display":"block","background-color":"#1E8A2B"}).fadeOut(8000).html(result);
         $("#txt_to_name").val('');
-        $("#txt_quotation_date").val('');  
         $("#txt_to_desig").val('');
         $("#txt_to_address").val(''); 
         $("#total_with_vat").val('');
         $("#takainword").val('');
-        $("#txt_to_concern").val('');
          show_datas();
   			$('#save').removeClass('disabled',false);			 
   			$('#update').addClass('disabled', true);
@@ -522,7 +460,7 @@ var com_id=$('#cbo_to_com_name').val();
 			success: function(results){	
 				 //alert (results['id']);
 				 $('#txt_to_address').val(results['address']);
-				 $('#txt_to_short_name').val(results['short_name']);
+				  $('#txt_to_short_name').val(results['short_name']);
 				
 			}
 	});
@@ -540,10 +478,7 @@ function openNav() {
 function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
-$(function() {
-            $( "#txt_quotation_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
-            //$( "#txt_delivery_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
-         });
+
 
 
 
@@ -568,14 +503,18 @@ $(window).resize(function() {
 //// scrolling table list view END
 </script>
 <!-- Horizontal menu js -->
-<script>
-  $(document).ready(function(){
-  $('ul li a').click(function(){
-    $('li a').removeClass("active");
-    $(this).addClass("active");
-});
-});
+<script type="text/javascript">
+var current = document.getElementById('default');
 
+  function highlite(el)
+  {
+     if (current != null)
+     {
+         current.className = "";
+     }
+     el.className = "highlite";
+     current = el;
+  }
 </script> 
 <style type="text/css">
 .sidenav {
@@ -633,29 +572,25 @@ $(window).resize(function() {
   font-size: 12px;
 }
 /* horizontal menu style */
-nav ul li{
-  list-style:none;
-  float:left;
-  padding-right:2px;
+#navv {
+	width:100%;
+	list-style:none;
+	margin-left:200px;
 }
-nav ul li a{
-  text-decoration:none;
-  color:#222;
-  background-color:#ccc;
-  padding:8px 8px;
-  text-decoration: none !important;
+#navv li{
+display:inline;
 }
-nav ul li a:hover{
-  background-color: black;
-  color:white;
-  }
-.active{
-  background-color:#d90000;
-  color:#fff;
+#navv a {
+	color:black;
+	text-decoration:none;
+	outline:0;
+	background-color:#CCCCCC;
+	padding:10px;
 }
-.activee{
-  background-color:#000;
+#navv a:active, #navv a:focus, #navv a:hover {
+	color:red; 
 }
+
 </style>
 </head>
 
@@ -689,7 +624,7 @@ nav ul li a:hover{
             </div>-->
           </div>
          <div class="dropdown">
-            <a href="commercial_home.php"><button class="dropbtn activee">commercial</button></a>
+            <a href="commercial_home.php"><button class="dropbtn">commercial</button></a>
             <!--<div class="dropdown-content">
               <a href="#">Link 1</a>
               <a href="#">Link 2</a>
@@ -728,15 +663,13 @@ nav ul li a:hover{
   </div>
   <span style="font-size:20px;cursor:pointer; float:left;" onClick="openNav()">&#9776; menu</span>
   
-<div class="horizontal_menu" style="float:left; text-align:center; margin-left: 25%;">
-  <nav class="navecation"> 
-    <ul id="navv">
-      <li><a class="menu active"  href="create_quotation.php">Create quotation</a></li>
-      <li><a class="menu" href="order_entry.php">Order Entry</a></li>
-      <li><a class="menu" href="create_bill.php">Create bill</a></li>
-      <li><a class="menu" href="create_challan.php">Create challan</a></li>
-    </ul>
-  </nav>
+  <div class="horizontal_menu" style="float:left; text-align:center;">  
+	<ul id="navv">
+	  <li><a id="default" class="highlite" onClick="highlite(this);" href="create_quotation.php">Create quotation</a></li>
+	  <li><a onClick="highlite(this);" href="order_entry.php">Order Entry</a></li>
+	  <li><a onClick="highlite(this);" href="create_bill.php">Create bill</a></li>
+	  <li><a onClick="highlite(this);" href="create_challan.php">Create challan</a></li>
+	</ul>
 </div>
   
   <span>  
@@ -761,15 +694,7 @@ nav ul li a:hover{
         <h1  style="text-align:center; font-size:20px;">Price Quotation</h1>
       </div>
       <div class="col-md-12">
-      
-      		<div style="float:right;">
-             <div class="input-group">
-              <input type="text" class="form-control" id="txt_quotation_date" name="txt_quotation_date" placeholder="Year-Month-Day">
-              <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk" id="quotation_date_red"></span></span>
-             </div>
-            </div>
-      
-        <h5  style="text-align:right;"><?php //echo date("d-m-Y") ?></h5>
+        <h5  style="text-align:right;"><?php echo date("d-m-Y") ?></h5>
       </div>
     </div>
 <form name="quotationFrm_1" id="quotationFrm_1" method="POST" action="">
@@ -790,8 +715,8 @@ nav ul li a:hover{
             <label class="control-label col-sm-2 col-md-2" for="designation">Designation:</label>
             <div class="col-sm-10 col-md-10">
              <div class="input-group">
-              <input type="text" class="form-control" id="txt_to_desig" name="txt_to_desig" placeholder="designation" style="width:285px;">
-              <span class="input-group-addon">&nbsp;</span></span>
+              <input type="text" class="form-control" id="txt_to_desig" name="txt_to_desig" placeholder="designation">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk" id="to_desi_red"></span></span>
               </div>
             </div>
           </div>        
@@ -849,16 +774,6 @@ nav ul li a:hover{
               </div>
             </div>
           </div>
-          <br>
-           <div class="form-group">
-            <label style="margin-right: 10px;" class="control-label col-sm-1 col-md-1" for="concern">Concern:</label>
-            <div class="col-sm-10 col-md-10">
-             <div class="input-group">
-              <input  type="text" class="form-control" id="txt_to_concern" name="txt_to_concern" placeholder="Dear Sir, hello.....">
-              <span class="input-group-addon"></span>
-              </div>
-            </div>
-          </div>
          <input type="hidden" id="update_id" name="update_id">  
       </div>
     </div>
@@ -871,7 +786,7 @@ nav ul li a:hover{
             <th width="200px">Particular</th>
             <th width="140px">Width</th>
             <th width="140px">Height</th>
-            <th width="100px">Total Sqft / Pcs</th>
+            <th width="100px">Total Sqft</th>
             <th width="100px">Price per unit</th>
 			<th width="80px">Qty</th>
             <th width="140px">Amount</th>
@@ -891,7 +806,6 @@ nav ul li a:hover{
               </td>
               <td>
 			   <select style="margin-left:2px;" class="form-control" id="txtItem_1" name="txtItem[]">
-			   
                   <?php
                   $sql="select id,task_name from lib_task_entry where status_active=1 and is_deleted=0";
                   $sql_qry=mysql_query($sql);
@@ -907,15 +821,15 @@ nav ul li a:hover{
                <!-- <input  class="form-control" type="text" id="txtItem_1" name="txtItem[]" value="" placeholder="particular name">-->
               </td>
               <td>
-                <input style="width:55px;float:left;" class="form-control" type="text" id="txtHeightFeet_1" name="txtHeightFeet_1[]" value=""  onKeyUp="calculate_hw();" placeholder="feet">
-                <input style="width:55px;" class="form-control" type="text" id="txtHeightInch_1" name="txtHeightInch_1[]" value=""  onKeyUp="calculate_hw();" placeholder="inch">
+                <input style="width:65px;float:left;" class="form-control" type="text" id="txtHeightFeet_1" name="txtHeightFeet_1[]" value=""  onKeyUp="calculate_hw();" placeholder="feet">
+                <input style="width:65px;" class="form-control" type="text" id="txtHeightInch_1" name="txtHeightInch_1[]" value=""  onKeyUp="calculate_hw();" placeholder="inch">
               </td>
               <td>
-                <input style="width:55px;float:left;" class="form-control" type="text" id="txtWidthFeet_1" name="txtWidthFeet_1[]" value=""  onKeyUp="calculate_hw();" placeholder="feet">
-                <input style="width:55px;" class="form-control" type="text" id="txtWidthInch_1" name="txtWidthInch_1[]" value=""  onKeyUp="calculate_hw();" placeholder="inch">
+                <input style="width:65px;float:left;" class="form-control" type="text" id="txtWidthFeet_1" name="txtWidthFeet_1[]" value=""  onKeyUp="calculate_hw();" placeholder="feet">
+                <input style="width:65px;" class="form-control" type="text" id="txtWidthInch_1" name="txtWidthInch_1[]" value=""  onKeyUp="calculate_hw();" placeholder="inch">
               </td>
               <td>
-                <input class="form-control" type="text" id="txtSqrft_1" name="txtSqrft[]" style="width:110px;text-align:right;" value=""  onKeyUp="calculate_hw();"  placeholder="total sqft/Pcs" >
+                <input class="form-control" type="text" id="txtSqrft_1" name="txtSqrft[]" style="width:110px;text-align:right;" value=""  onKeyUp="calculate_hw();" placeholder="total sqft" readonly>
               </td>
               <td>
                 <input class="form-control" type="text" id="txtPrice_1" name="txtPrice[]" style="width:110px;text-align:right;" value="" onKeyUp="calculate_hw();" placeholder="price per unit">
@@ -965,23 +879,11 @@ nav ul li a:hover{
         </table>
 </div>  
       </div>
-<!--</form>-->
+</form>
              
  <p style="text-align:left; margin-top:-6px;font-size:17px;"><b style="float:left;">Taka in word:</b><input class="form-control" style="width:640px;text-align:left;float:left; border:none;background-color:#FFFFFF;border-color:#fff;" readonly type="text" id="takainword" onKeyUp="calculate_hw();"></p>
  <br/>
- <p style="text-align:left; margin-top:-6px;font-size:14px;"><b>Note:</b> 
- <div style="margin-top:-40px;">
-<?php
-	
-	foreach ($notes_arr as $key => $note) {
-		?>
-		<input style="margin-left:-50px; margin-right:-90px;" type="checkbox" name="note" id="note_<?php echo $key; ?>" value="<?php echo $key; ?>"> <?php echo $note; ?><br/>
-		<?php
-	}
-
-?>
-</div>
- </p>
+ <p style="text-align:left; margin-top:-6px;font-size:14px;"><b>Note:</b> Please issue work order and cheque in favor of OH(Out of Home)</p>
             
 
               <div class="col-sm-5 col-md-offset-5">
@@ -989,11 +891,9 @@ nav ul li a:hover{
                     <button type="button" class="btn btn-default" id="save" onClick="data_send();">Create</button>
                     <button type="button" class="btn btn-default disabled" id="update" onClick="data_update();">Update</button>          
                     <button type="reset" class="btn btn-default" onClick="active_save_btn();">Reset</button>
-                    <button type="button" class="btn btn-default disabled" id="csv_generate" onClick="fnc_csv_generate();">CSV</button> 
                     <!--<button type="button" class="btn btn-primary disabled" id="print" onClick="data_print(1);">Print</button> -->                
                 </div>
               </div>
-              </form>
          <div class="col-md-12">
             <p style="background-color:#f9f9f9;color:#fff; display:none;" id="msg_success"></p>
             <p style="background-color:#f3f3f3;;color:#fff; display:none;" id="msg_failed"></p>
@@ -1002,13 +902,6 @@ nav ul li a:hover{
     </div>
 
   </div>
-
-<script type="text/javascript">
-/*	
-*/
-
-</script>
-
       <div class="col-md-12">
        <h2>Quotation list</h2>
       <p><span class="glyphicon glyphicon-search search-boxs"></span><input type="text" id="search_user_create" placeholder="search" onKeyUp="fnc_search();"></p>
@@ -1110,35 +1003,21 @@ function fn_deletebreak_down_tr(rowNo, table_id)
           var h_inch=$("#txtHeightInch_"+i).val()*1;
           var w_feet=$("#txtWidthFeet_"+i).val()*1;
           var w_inch=$("#txtWidthInch_"+i).val()*1;
-		
-           //for pcs calculation
-          if (h_feet=="" && h_inch=="" && w_feet=="" && w_inch=="") 
-          	{
-          		 var pcs=$("#txtSqrft_"+i).val()*1;
-          		 var price=$("#txtPrice_"+i).val()*1;
-          		 var multi_unitprice= (pcs*price);
-          		 $("#txtUnitTotalPrice_"+i).val(number_format(multi_unitprice,2));
-          		 $("#txtQty_"+i).val(" ");
-          		 $('#txtQty_'+i).attr('readonly',true);
-          	}
-          	
-          	else
-          	{
-          	
-          	$('#txtQty_'+i).attr('readonly',false);
-	          var h_fi=h_feet+(h_inch/12);
-	          var w_fi=w_feet+(w_inch/12);
-	          //calculate widht*height
-	          var multi_hw=w_fi*h_fi;
-	          $("#txtSqrft_"+i).val(number_format(multi_hw,2)); 
-	          //calculate total sqft*price unit
-	          var unit_price=$("#txtPrice_"+i).val()*1;			  
-			  var qty=$("#txtQty_"+i).val()*1;			  
-	          var multi_unitprice=unit_price*multi_hw*qty;
-			 // var multi_unitprice_qty=multi_unitprice*qty;			  
-	          $("#txtUnitTotalPrice_"+i).val(number_format(multi_unitprice,2));
-	          //$('#txtSqrft_'+i).attr('readonly',true);
-         	} 
+		  
+          var h_fi=h_feet+(h_inch/12);
+          var w_fi=w_feet+(w_inch/12);
+          //calculate widht*height
+          var multi_hw=w_fi*h_fi;
+          $("#txtSqrft_"+i).val(number_format(multi_hw,2)); 
+          //calculate total sqft*price unit
+          var unit_price=$("#txtPrice_"+i).val()*1;
+		  
+		  var qty=$("#txtQty_"+i).val()*1;
+		  
+          var multi_unitprice=unit_price*multi_hw*qty;
+		 // var multi_unitprice_qty=multi_unitprice*qty;
+		  
+          $("#txtUnitTotalPrice_"+i).val(number_format(multi_unitprice,2));
           //calculate subtotal
           multidata += multi_unitprice;
           //calculate vat
@@ -1166,7 +1045,7 @@ function fn_deletebreak_down_tr(rowNo, table_id)
       //$(".fltrow").hide();
       var w = window.open("Surprise", "#");
       var d = w.document.open();
-      w.document.write('<!DOCTYPE html>'+'<html><head><title>Price Quotation Print!</title><link rel="stylesheet" type="text/css" href="../css/style_print.css"></head><body>'+'<button id="print_btn" onclick="window.print();"> Print </button>'+document.getElementById('hide_print_section').innerHTML+'</body></html>');
+      w.document.write('<!DOCTYPE html>'+'<html><head><title>Price Quotation Print!</title><link rel="stylesheet" type="text/css" href="../css/style_print.css"></head><body>'+document.getElementById('hide_print_section').innerHTML+'</body></html>');
       //d.write ('<!DOCTYPE html>'+'<html><head><title>print price quotation</title><link rel="stylesheet" type="text/css" href="style.css" media="print" /></head><body>'+document.getElementById('report_container2').innerHTML+'</body></html>');
       //$(".fltrow").show();
       //'<html><head><title>print price quotation</title><link rel="stylesheet" href="../../../css/style_common.css" type="text/css" media="print" /></head><body>'+document.getElementById('report_container2').innerHTML+'</body</html>');
@@ -1195,29 +1074,16 @@ function fn_deletebreak_down_tr(rowNo, table_id)
                show_detail_form_report(results['id']);
             var com_lib_array = <?php echo json_encode($return_lib_company_arr); ?>;
             var   to_name= results['to_name'];
-            var   to_quotation_date= results['quotation_date'];
             var   to_desig= results['to_designation'];
             var   to_com_name =com_lib_array[results['to_company']];
             var   to_address=results['to_address'];
             var   to_subject=results['to_quotation_subject'];
-            var   to_concern=results['dearSir'];
             var   total_amount=results['total_amount'];
             var   vat=results['vat'];
-			       var   ait=results['ait'];
+			var   ait=results['ait'];
             var   total_amount_with_vat=results['total_amount_with_vat'];
             var   takainword=results['total_amount_in_word'];
-
-
-            /*
-            var noteData=results['notes'].split(',');
-            var printThis = "";
-            for(var i = 0; i < noteData.length; i++){
-                printThis += "<br>"+pausecontent[noteData[i]];
-            }
-			*/
-                   
             //date
-            var quotation_date = new Date(to_quotation_date); var dd = quotation_date.getDate(); var mm = quotation_date.getMonth()+1; var yyyy = quotation_date.getFullYear(); if(dd<10){dd='0'+dd} if(mm<10){mm='0'+mm} var quotation_date = dd+'/'+mm+'/'+yyyy; 
             var d = new Date();
             var month = d.getMonth()+1;
             var day = d.getDate();
@@ -1225,22 +1091,10 @@ function fn_deletebreak_down_tr(rowNo, table_id)
                 ((''+month).length<2 ? '0' : '') + month + '/' +
                 d.getFullYear();
                 //end date
-
-var add_ait="";               
+                //alert(output);
 if(ait>0)
 {
 	var add_ait='<tr><td colspan="6" style="text-align:right;padding-right:5px;">AIT %</td><td style="text-align:right;padding-right:5px;border:1px solid black;">'+ait+'</td></tr>';
-}
-var add_vat="";              
-if(vat>0)
-{
-	var add_vat='<tr><td colspan="6" style="text-align:right;padding-right:5px;">VAT %</td><td style="text-align:right;padding-right:5px;border:1px solid black;">'+vat+'</td></tr>';
-}
-
-var add_desig="";
-if(to_desig!="")
-{
-   var add_desig=to_desig+'<br>';
 }
             $('#print').removeClass('disabled',false); 
 
@@ -1250,23 +1104,22 @@ if(to_desig!="")
       '<h4 style="text-align:center;">Quotation</h4>'+
     '</div>'+
     '<div class="col-md-12">'+
-      '<h4 style="text-align:right;" id="qdate">Date:'+quotation_date+'</h4>'+
+      '<h4 style="text-align:right;" id="qdate">Date:'+output+'</h4>'+
     '</div>'+
-    '<div class="col-md-12" style="text-align:left;background-color:#fff; ">'+
+    '<div class="col-md-12" style="text-align:left;background-colorf:#ff;">'+
       '<b>To</b><br>'+
       to_name+'<br>'+
-      add_desig+
+      to_desig+'<br>'+
       to_com_name+'<br>'+
       to_address+'<br><br>'+
-      '<b>Subject: </b>' + to_subject+'<br><br>'+
-      to_concern+'<br>'+    
+      '<b>Subject: </b>' + to_subject+
       '<table style="margin-top:10px;border-collapse:collapse;">'+
-        '<thead style="border-top:1px solid black;">'+
+        '<thead>'+
           '<tr>'+
             '<th style="width:50px;text-align:center;border:1px solid black;">SL</th>'+
             '<th style="width:350px;text-align:center;border:1px solid black;">Particulars</th>'+
             '<th style="width:150px;text-align:center;border:1px solid black;">Size</th>'+
-            '<th style="width:120px;text-align:center;border:1px solid black;">Total Sqft / Pcs</th>'+
+            '<th style="width:120px;text-align:center;border:1px solid black;">Total Sqft</th>'+
             '<th style="width:100px;text-align:center;border:1px solid black;">Unit Price</th>'+
             '<th style="width:100px;text-align:center;border:1px solid black;"text-align:center;>Qty</th>'+
             '<th style="width:120px;text-align:center;border:1px solid black;">Amount</th>'+
@@ -1283,27 +1136,31 @@ if(to_desig!="")
             '<td style="text-align:right;">1568</td>'+
           '</tr>'+
         '</tbody>'+
-        //'<tfoot>'+
+        '<tfoot>'+
           '<tr>'+
             '<td colspan="6" style="text-align:right;padding-right:5px;">Sub Total Amount Tk</td>'+
             '<td style="text-align:right;padding-right:5px;border:1px solid black;"><b>'+total_amount+'</b></td>'+
           '</tr>'+
-		  add_vat+		 
-		  add_ait+		 
+		  '<tr>'+
+            '<td colspan="6" style="text-align:right;padding-right:5px;">Vat %</td>'+
+            '<td style="text-align:right;padding-right:5px;border:1px solid black;">'+vat+'</td>'+
+		  '</tr>'+
+			 
+		 add_ait+
+		 
           '<tr>'+
             '<td colspan="6" style="text-align:right;padding-right:5px;">Total Amount Tk</td>'+
             '<td style="text-align:right;padding-right:5px;border:1px solid black;"><b>'+total_amount_with_vat+'</b></td>'+
           '</tr>'+
           '<tr>'+
          ' </tr>'+
-        //'</tfoot>'+
+        '</tfoot>'+
       '</table>'+
       '<div class="col-md-12">'+
         '<p style="text-align:left;"><b>Taka In Word: </b>' + takainword+'</p>'+
       '</div>'+
-      '<div id="notess" class="col-md-12">'+
-        '<p style="text-align:left;"><b>Note: </b>'+'</p>'+
-       
+      '<div class="col-md-12">'+
+        '<p style="text-align:left;"><b>Note:</b></p>'+
       '</div>'+
       '<div class="col-md-12" style="margin-top:100px;">'+
         '<div class="col-md-4" style="float:left;">'+
@@ -1343,35 +1200,21 @@ if(to_desig!="")
       var id = row[0];
       var mst_id = row[1];
       var item_name = row[2];
-      var width_fee = row[3];
-      var width_inc = row[4];
-      var height_fee = row[5];
-      var height_inc = row[6];
+      var width_feet = row[3];
+      var width_inch = row[4];
+      var height_feet = row[5];
+      var height_inch = row[6];
       var total_sqft = row[7];
       var price_per_unit = row[8];
       var amount = row[9];
-	  var q_qtyy = row[16];
+	  var q_qty = row[16];
         
-
- 	  var width_feet ="";
-      var width_inch ="";
-      var height_feet ="";
-      var height_inch ="";
-      var q_qty ="";
-
-      if(width_fee>0){width_feet=width_fee; width_feet=width_feet + '\'' ;} else {}
-      if(width_inc>0){width_inch=width_inc; width_inch=width_inch +'\"' ;} else {}
-      if(height_fee>0){height_feet=height_fee; height_feet= ' x ' + height_feet + '\'' ;} else {}
-      if(height_inc>0){height_inch=height_inc; height_inch=height_inch +'\"' ;} else {}
-      if(q_qtyy>0){q_qty=q_qtyy;} else {}
-
-
 //var incentive_counter=1;
 //alert (incentive_counter);
  update_varr += '$("#tbl_quotation_id tbody")'+'<tr id="tbl_tr_id">'+
             '<td style="text-align:center;border:1px solid black;">'+sll+'</td>'+
             '<td style="text-align:left;border:1px solid black;">'+item_name+'</td>'+
-            '<td style="text-align:center;border:1px solid black;">'+width_feet  + width_inch + height_feet  + height_inch +'</td>'+
+            '<td style="text-align:center;border:1px solid black;">'+width_feet+ '\'' +':' + width_inch+'\"' +' x ' +height_feet+ '\'' +':' + height_inch+'\"' +'</td>'+
             '<td style="text-align:center;border:1px solid black;">'+total_sqft+'</td>'+
             '<td style="text-align:right;padding-right:5px;border:1px solid black;">'+price_per_unit+'</td>'+
             '<td style="text-align:right;padding-right:5px;border:1px solid black;">'+q_qty+'</td>'+
@@ -1398,24 +1241,7 @@ if(to_desig!="")
     //});
  //});
 }
-//action for Generrate CSV file
-function fnc_csv_generate()
-{
-	 var update_id1 = $("#update_id").val();
-	 $.ajax({   
-      type: "GET",
-      url: "controller/create_quotation_controller.php",
-	  data:  'update_id1=' + update_id1 +'&action=csv_export',  
-      dataType: "html",   
-      cache: false,       
-      success: function(response){ 
-      //$("#data_table_container").html(response);
-	  var response=response.split('***')         
-      $("#msg_success").css({"display":"block","background-color":"#1E8A2B"}).fadeOut(8000).html(response[1]); 
-      }
-      });
-}
-
+  
 </script>
 
 

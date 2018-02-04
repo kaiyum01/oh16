@@ -54,14 +54,14 @@ if(	isset($_POST['action']) &&
 	//$bill_no2 		=$_POST['bill_no1'];
 	$bill_status2 	=$_POST['bill_status1'];
 	//generate order number OH+ORD+returnNextId+Date
-	$generate_order_date=date('m');
+	$generate_order_date=date('d-m-y');
   	$order_number_generate=return_next_id("id", "com_order_entry", "1");
-  	$order_number_generate='OH-'.$short_name2.'-O-'.$generate_order_date.'-'.$order_number_generate;
+  	$order_number_generate='OH-'.$short_name2.'-ORD-'.$order_number_generate.'-'.$generate_order_date;
 
 	//generate job number OH+JOB+returnNextId+Date
-	$generate_job_date=date('m');
+	$generate_job_date=date('d-m-y');
   	$job_number_generate=return_next_id("id", "com_order_entry", "1");
-  	$job_number_generate='OH-'.$short_name2.'-J-'.$generate_job_date.'-'.$job_number_generate;
+  	$job_number_generate='OH-'.$short_name2.'-JOB-'.$job_number_generate.'-'.$generate_job_date;
 
 
 	if($action_save=="save_data")
@@ -328,14 +328,14 @@ if(isset($_GET['action'])){
 		$result=mysql_query("select id,quotation_number_generate,quotation_date,to_name,to_company,to_quotation_subject,total_amount_with_vat from com_create_quotation_mst where is_deleted=0 and status_active=1 order by id DESC");
 		?>
 		<table class="table table-hover scroll">
-		<thead style="font-size:12px;">
+		<thead>
 		  <tr>		 
 			<th>SL</th> 	
 			<th>Quotation No</th>
 			<th>Quotation Date</th>
 			<th>person name</th> 	
 			<th>company Name</th> 	
-			<th>Quot. subject</th>
+			<th>Quotation subject</th>
 			<th>Total Amount</th>
 			<th>Action</th>
 		  </tr>
@@ -354,7 +354,7 @@ if(isset($_GET['action'])){
 		<td align="center"><?php echo $return_lib_company_arr[$data[4]]; ?></td>
 		<td align="center"><?php echo $data[5]; ?></td>
 		<td align="center"><?php echo $data[6]; ?></td>		
-        <td align="center" data-dismiss="modal"><span class="glyphicon glyphicon-import" onclick="get_data_from_list_quotation(<?php echo $data[0]; ?>)";></span></td>
+        <td align="center"><span class="glyphicon glyphicon-import" onclick="get_data_from_list_quotation(<?php echo $data[0]; ?>)";></span></td>
       </tr>
    <?php
   	}
@@ -377,14 +377,14 @@ if(isset($_GET['action']) && isset($_GET['search_value1'])){
 		$result=mysql_query("select id,quotation_number_generate,quotation_date,to_name,to_company,to_quotation_subject,total_amount_with_vat from com_create_quotation_mst where is_deleted=0 and status_active=1 and quotation_number_generate='$search_value2' order by id DESC");
 		?>
 		<table class="table table-hover scroll">
-    <thead style="font-size:12px;">
+    <thead>
       <tr>		 
 		<th>SL</th> 	
 		<th>Quotation No</th>
 		<th>Quotation Date</th>
 		<th>person name</th> 	
 		<th>company Name</th> 	
-		<th>Quot. subject</th>
+		<th>Quotation subject</th>
 		<th>Total Amount</th>
 		<th>Action</th>
 	  </tr>
@@ -404,7 +404,7 @@ if(isset($_GET['action']) && isset($_GET['search_value1'])){
 		<td align="center"><?php echo $return_lib_company_arr[$data[4]]; ?></td>
 		<td align="center"><?php echo $data[5]; ?></td>
 		<td align="center"><?php echo $data[6]; ?></td>
-        <td align="center" data-dismiss="modal"><span class="glyphicon glyphicon-import" onclick="get_data_from_list_quotation(<?php echo $data[0]; ?>)";></span></td>
+        <td align="center"><span class="glyphicon glyphicon-import" onclick="get_data_from_list_quotation(<?php echo $data[0]; ?>)";></span></td>
       </tr>
    <?php
   	}

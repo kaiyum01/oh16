@@ -262,14 +262,18 @@ function closeNav() {
 }
 </script>
 <!-- Horizontal menu js -->
-<script>
-  $(document).ready(function(){
-  $('ul li a').click(function(){
-    $('li a').removeClass("active");
-    $(this).addClass("active");
-});
-});
+<script type="text/javascript">
+var current = document.getElementById('default');
 
+  function highlite(el)
+  {
+     if (current != null)
+     {
+         current.className = "";
+     }
+     el.className = "highlite";
+     current = el;
+  }
 </script>
 <style type="text/css">
 .sidenav {
@@ -326,29 +330,23 @@ function closeNav() {
   margin: 2px;
 }
 /* horizontal menu style */
-nav ul li{
-  list-style:none;
-  float:left;
-  padding-right:2px;
+#navv {
+	width:100%;
+	list-style:none;
+	margin-left:280px;
 }
-nav ul li a{
-  text-decoration:none;
-  color:#222;
-  background-color:#ccc;
-  padding:8px 8px;
-  text-decoration: none !important;
+#navv li{
+display:inline;
 }
-nav ul li a:hover{
-  background-color: black;
-  color:white;
-  }
-.active{
-  background-color:#d90000;
-  color:#fff;
-
+#navv a {
+	color:black;
+	text-decoration:none;
+	outline:0;
+	background-color:#CCCCCC;
+	padding:10px;
 }
-.activee{
-	background-color:#000;
+#navv a:active, #navv a:focus, #navv a:hover {
+	color:red; 
 }
 </style>
 </head>
@@ -375,7 +373,7 @@ nav ul li a:hover{
             </div>-->
           </div>
 	  	<div class="dropdown">
-         	<a href="library_home.php"><button class="dropbtn activee">library</button></a>
+         	<a href="library_home.php"><button class="dropbtn">library</button></a>
             <!--<div class="dropdown-content">
               <a href="#">Link 1</a>
               <a href="#">Link 2</a>
@@ -419,15 +417,12 @@ nav ul li a:hover{
   </div>
   <span style="font-size:20px;cursor:pointer; float:left;" onClick="openNav()">&#9776; menu</span>
   
-<div class="horizontal_menu" style="float:left; text-align:center; margin-left: 35%;">
-    <nav class="navecation"> 
-      <ul id="navv">
-        <li><a class="menu active"  href="task_entry.php">Task Entry</a></li>
-        <li><a class="menu " href="client_entry.php">Client Entry</a></li>
-      </ul>
-    </nav>
-</div>
-
+  <div class="horizontal_menu" style="float:left; text-align:center;">  
+	<ul id="navv">
+	  <li><a id="default" class="highlite" onclick="highlite(this);" href="task_entry.php">Task Entry</a></li>
+	  <li><a onclick="highlite(this);" href="client_entry.php">Client Entry</a></li>
+	</ul>
+  </div>
   
   <span>  
     <div class="page_path" style="float:right; margin-top:-20px;">

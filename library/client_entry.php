@@ -46,13 +46,12 @@ function data_send(){
   var contact_person_name     	= $("#txt_contact_person_name").val();
   var division  				= $("#cbo_division").val();
   var address     				= $("#txt_address").val();
-  var address 					= address.split("\n").join(",");
   var company_name     			= $("#txt_company_name").val();
   var person_phone     			= $("#txt_person_phone").val();
   var area      				= $("#txt_area").val();
   var email     				= $("#txt_email").val();
   var company_phone  			= $("#txt_company_phone").val();
-  var short_name     			= $("#txt_short_name").val();
+  var short_name     					= $("#txt_short_name").val();
   var person_desig     			= $("#txt_person_desig").val();
   var tin     					= $("#txt_tin").val();
   var website     				= $("#txt_website").val();
@@ -61,7 +60,7 @@ function data_send(){
 
   // Returns successful data submission message when the entered information is stored in database.
   var dataString = '&company_code1='+ company_code + '&contact_person_name1='+ contact_person_name + '&division1='+ division + '&address1='+ address + '&company_name1='+ company_name + '&person_phone1='+ person_phone + '&area1='+ area + '&email1='+ email + '&company_phone1='+ company_phone + '&short_name1='+ short_name + '&person_desig1='+ person_desig + '&tin1='+ tin + '&website1='+ website + '&faxno1='+ faxno;
-  //alert(dataString);return;
+  //alert(dataString);
   //if(company_code==''){ $("#company_code_red").css("color","#EE5269" );}else{ $("#company_code_red").css("color","green" );}
   if(contact_person_name==''){$("#contact_person_red").css("color","#EE5269" );}else{$("#contact_person_red").css("color","green" );}
   if(address==''){$("#address_red").css("color","#EE5269" ); }else{$("#address_red").css("color","green" ); }
@@ -70,13 +69,13 @@ function data_send(){
   //if(area==''){$("#area_red").css("color","#EE5269" );}else{$("#area_red").css("color","green" );}
   if(email==''){$("#email_red").css("color","#EE5269" ); }else{$("#email_red").css("color","green" ); }
   //if(company_phone==''){$("#company_phone_red").css("color","#EE5269" );}else{$("#company_phone_red").css("color","green" );}
-  if(short_name==''){ $("#short_name_red").css("color","#EE5269" );}else{ $("#short_name_red").css("color","green" );}
+  //if(short_name==''){ $("#short_name_red").css("color","#EE5269" );}else{ $("#short_name_red").css("color","green" );}
   if(person_desig==''){$("#person_desig_red").css("color","#EE5269" );}else{$("#person_desig_red").css("color","green" );}
   //if(tin==''){$("#tin_red").css("color","#EE5269" ); }else{$("#tin_red").css("color","green" ); }
   //if(website==''){$("#website_red").css("color","#EE5269" );}else{$("#website_red").css("color","green" );}
   //if(faxno==''){$("#faxno_red").css("color","#EE5269" );}else{$("#faxno_red").css("color","green" );}
   
-  if(contact_person_name==''||address=='' ||company_name=='' || person_phone=='' || email==''|| short_name==''|| person_desig==''){
+  if(contact_person_name==''||address=='' ||company_name=='' || person_phone=='' || email==''||person_desig==''){
      $("#msg_failed").css({"display":"block","background-color":"#EE5269"}).fadeOut(8000).html(" You have must fill out <b>red * mark</b>!"); 
   }
   else
@@ -200,13 +199,12 @@ function data_update(){
 	var contact_person_name     = $("#txt_contact_person_name").val();
 	var division  				= $("#cbo_division").val();
 	var address     			= $("#txt_address").val();
-	var address 				= address.split("\n").join(",");
 	var company_name     		= $("#txt_company_name").val();
 	var person_phone     		= $("#txt_person_phone").val();
 	var area      				= $("#txt_area").val();
 	var email     				= $("#txt_email").val();
 	var company_phone  			= $("#txt_company_phone").val();
-	var short_name     		  	= $("#txt_short_name").val();
+	var short_name     				= $("#txt_short_name").val();
 	var person_desig     		= $("#txt_person_desig").val();
 	var tin     				= $("#txt_tin").val();
 	var website     			= $("#txt_website").val();
@@ -224,13 +222,13 @@ function data_update(){
   //if(area==''){$("#area_red").css("color","#EE5269" );}else{$("#area_red").css("color","green" );}
   if(email==''){$("#email_red").css("color","#EE5269" ); }else{$("#email_red").css("color","green" ); }
   //if(company_phone==''){$("#company_phone_red").css("color","#EE5269" );}else{$("#company_phone_red").css("color","green" );}
-  if(short_name==''){ $("#short_name_red").css("color","#EE5269" );}else{ $("#short_name_red").css("color","green" );}
+  //if(short_name==''){ $("#short_name_red").css("color","#EE5269" );}else{ $("#short_name_red").css("color","green" );}
   if(person_desig==''){$("#person_desig_red").css("color","#EE5269" );}else{$("#person_desig_red").css("color","green" );}
   //if(tin==''){$("#tin_red").css("color","#EE5269" ); }else{$("#tin_red").css("color","green" ); }
   //if(website==''){$("#website_red").css("color","#EE5269" );}else{$("#website_red").css("color","green" );}
   //if(faxno==''){$("#faxno_red").css("color","#EE5269" );}else{$("#faxno_red").css("color","green" );}
   
-  if(contact_person_name==''||address=='' ||company_name=='' || person_phone=='' || email=='' || short_name=='' || person_desig==''){
+  if(contact_person_name==''||address=='' ||company_name=='' || person_phone=='' ||email==''||person_desig==''){
      $("#msg_failed").css({"display":"block","background-color":"#EE5269"}).fadeOut(8000).html("You have must fill out <b>red * mark</b>!"); 
   }
   else
@@ -373,14 +371,18 @@ function closeNav() {
 }
 </script>
 <!-- Horizontal menu js -->
-<script>
-  $(document).ready(function(){
-  $('ul li a').click(function(){
-    $('li a').removeClass("active");
-    $(this).addClass("active");
-});
-});
+<script type="text/javascript">
+var current = document.getElementById('default');
 
+  function highlite(el)
+  {
+     if (current != null)
+     {
+         current.className = "";
+     }
+     el.className = "highlite";
+     current = el;
+  }
 </script>
 <style type="text/css">
 .sidenav {
@@ -437,28 +439,23 @@ function closeNav() {
   margin: 2px;
 }
 /* horizontal menu style */
-nav ul li{
-  list-style:none;
-  float:left;
-  padding-right:2px;
+#navv {
+	width:100%;
+	list-style:none;
+	margin-left:280px;
 }
-nav ul li a{
-  text-decoration:none;
-  color:#222;
-  background-color:#ccc;
-  padding:8px 8px;
-  text-decoration: none !important;
+#navv li{
+display:inline;
 }
-nav ul li a:hover{
-  background-color: black;
-  color:white;
-  }
-.active{
-  background-color:#d90000;
-  color:#fff;
+#navv a {
+	color:black;
+	text-decoration:none;
+	outline:0;
+	background-color:#CCCCCC;
+	padding:10px;
 }
-.activee{
-	background-color:#000;
+#navv a:active, #navv a:focus, #navv a:hover {
+	color:red; 
 }
 </style>
 </head>
@@ -485,7 +482,7 @@ nav ul li a:hover{
             </div>-->
           </div>
 	  	<div class="dropdown">
-         <a href="library_home.php"><button class="dropbtn activee">library</button></a>
+         <a href="library_home.php"><button class="dropbtn">library</button></a>
             <!--<div class="dropdown-content">
               <a href="#">Link 1</a>
               <a href="#">Link 2</a>
@@ -528,18 +525,14 @@ nav ul li a:hover{
      
   </div>
   <span style="font-size:20px;cursor:pointer; float:left;" onClick="openNav()">&#9776; menu</span>
- 
-
-
-<div class="horizontal_menu" style="float:left; text-align:center; margin-left: 35%;">
-    <nav class="navecation"> 
-      <ul id="navv">
-        <li><a class="menu "  href="task_entry.php">Task Entry</a></li>
-        <li><a class="menu active" href="client_entry.php">Client Entry</a></li>
-      </ul>
-    </nav>
-</div>
-
+  
+    <div class="horizontal_menu" style="float:left; text-align:center;">  
+	<ul id="navv">
+	  <li><a id="default" class="highlite" onclick="highlite(this);" href="task_entry.php">Task Entry</a></li>
+	  <li><a onclick="highlite(this);" href="client_entry.php">Client Entry</a></li>
+	</ul>
+  </div>
+  
   <span>  
     <div class="page_path" style="float:right; margin-top:-20px;">
           <p id="welcome">
@@ -666,7 +659,7 @@ nav ul li a:hover{
       <div class="col-sm-8">
       <div class="input-group">
         <input type="text" class="form-control" id="txt_short_name" name="txt_short_name" placeholder="Short Name">
-        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk" id="short_name_red"></span></span>
+        <span class="input-group-addon"></span>
         </div>
       </div>
     </div>

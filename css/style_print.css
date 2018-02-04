@@ -1,5 +1,5 @@
 body{
-/*margin-top:150px;*/
+margin-top:150px;
 /*font-family: sans-serif; */
 font-family: calibri;
 font-size:15px;
@@ -8,27 +8,7 @@ font-size:15px;
 display:none;
 }
 table{
-border:0px solid black;border-collapse:collapse;border-spacing: 0px;font-family:calibri;}
-
-#print_btn{
-	color:red;
-	background-color:#06C;
-	color:#FFF;
-	margin-top:0;
-	padding:5px;
-	}
-@media print {
- table { page-break-inside:auto;}
-    tr    { page-break-inside:avoid; page-break-after:auto; }
-    thead { display:table-header-group; border-top: 0px solid black; border-collapse: collapse;border-spacing: 0px; }
-   
-}
-
-@media print {
-  #print_btn {
-  display: none;
-  }
-}
+margin-top:10px;border:1px solid black;border-collapse:collapse;font-family:calibri;}
 
 
 

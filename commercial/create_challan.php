@@ -37,11 +37,9 @@ include('../include/message_function.php');
   <link rel="stylesheet" href="../css/font-awesome/css/font-awesome.min.css">
   <script type="text/javascript" src="../include/function_for_js.js"></script>
   <script type="text/javascript" src="../js/jquery.js"></script>
-  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
  <!-- <script type="../js/jquery.min.js"></script>-->
   <script type="../js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="../css/jquery_ui.css">
-  <script type="text/javascript" src="../js/jquery_ui.js"></script>
+
 <script type="text/javascript">
 
 // show data list ORDER view function
@@ -69,18 +67,17 @@ function data_send(){
   //$(document).ready(function(){  
   // $("#submit").click(function(){ 
         var to_name         = $("#txt_to_name").val();
-        var to_challan_date = $("#txt_challan_date").val();
+        var to_name         = $("#txt_to_name").val();
         var to_designation  = $("#txt_to_desig").val();
         var to_company      = $("#cbo_to_com_name").val();
         var to_address      = $("#txt_to_address").val();
         var to_subject      = $("#txt_to_subject").val();
-        var to_concern      = $("#txt_to_concern").val();
 
         var hidden_quotation_id  = $("#hidden_quotation_id").val();
         var hidden_order_id      = $("#hidden_order_id").val();
-		   var hidden_short_name    = $("#txt_short_name").val();
+		var hidden_short_name    = $("#txt_short_name").val();
 
-        var dataString ='&to_challan_date='+ to_challan_date +'&to_subject='+ to_subject + '&hidden_quotation_id='+ hidden_quotation_id + '&hidden_order_id='+ hidden_order_id + '&hidden_short_name='+ hidden_short_name + '&to_concern='+ to_concern;
+        var dataString ='&to_subject='+ to_subject + '&hidden_quotation_id='+ hidden_quotation_id + '&hidden_order_id='+ hidden_order_id + '&hidden_short_name='+ hidden_short_name;
     //alert(dataString);
        /* var row_count=$('#tbl_quotation_id tbody tr').length;
         //alert(row_count);return;
@@ -97,15 +94,14 @@ function data_send(){
         } 
         */
           
- /*  if(to_name==''||to_designation==''){
+   if(to_name==''||to_designation==''){
           $("#msg_failed").css({"display":"block","background-color":"#EE5269"}).fadeOut(8000).html(" You have must fill out <b>red * mark</b>!"); 
-  }*/
-  if(to_challan_date==''){$("#challan_date_red").css("color","#EE5269" );}else{$("#challan_date_red").css("color","green" );}
+  }
   if(to_name==''){ $("#to_name_red").css("color","#EE5269" );}else{ $("#to_name_red").css("color","green" );}
-  //if(to_designation==''){ $("#to_desi_red").css("color","#EE5269" );}else{ $("#to_desi_red").css("color","green" );}
+  if(to_designation==''){ $("#to_desi_red").css("color","#EE5269" );}else{ $("#to_desi_red").css("color","green" );}
   if(to_address==''){ $("#to_address_red").css("color","#EE5269" );}else{ $("#to_address_red").css("color","green" );}
   if(to_subject==''){ $("#to_sub_red").css("color","#EE5269" );}else{ $("#to_sub_red").css("color","green" );}
-  if(to_name==''|| to_address=='' || to_challan_date=='' || to_subject==''){
+  if(to_name==''|| to_designation=='' || to_address=='' || to_subject==''){
      $("#msg_failed").css({"display":"block","background-color":"#EE5269"}).fadeOut(8000).html(" You have must fill out <b>red mark</b>!"); 
   }
   else
@@ -120,15 +116,12 @@ function data_send(){
       { 
         $("#msg_success").css({"display":"block","background-color":"#1E8A2B"}).fadeOut(8000).html(result);
         $("#txt_to_name").val('');
-        $("#txt_challan_date").val('');   
         $("#txt_to_desig").val('');
         $("#txt_to_address").val(''); 
-        $("#txt_to_subject").val('');
-        $("#txt_to_concern").val('');
         $("#update_id").val(''); 
         $("#hidden_quotation_id").val('');
         $("#hidden_order_id").val('');
-		    $("#hidden_short_name").val('');
+		$("#hidden_short_name").val('');
         
          show_datas();
       }
@@ -194,17 +187,11 @@ for (var i = 0; i < len; i++) {
     console.log(results[i].phone);
 }*/
          $("#txt_to_name").val(results['to_name']);
-         $("#txt_challan_date").val(results['challan_date']);
          $("#txt_to_desig").val(results['to_designation']);
          $("#cbo_to_com_name").val(results['to_company']);
-		     $("#txt_short_name").val(results['short_name']);
+		 $("#txt_short_name").val(results['short_name']);
          $("#txt_to_address").val(results['to_address']);
-         //$("#txt_to_subject").val(results['to_quotation_subject']);
-
-         var original_sub=results['to_quotation_subject'];
-         var challan_subj=original_sub.replace("Quotation", "Challan");
-         $("#txt_to_subject").val(challan_subj);
-
+         $("#txt_to_subject").val(results['to_quotation_subject']);
          $('#update_id').val('');
 
          $("#hidden_quotation_id").val(results['quotationId']);
@@ -223,12 +210,10 @@ for (var i = 0; i < len; i++) {
 
           //for print data
           var to_name= results['to_name'];
-           var to_challan_date= results['challan_date'];
           var to_designation=results['to_designation'];
           var to_company=results['to_company'];
           var to_address=results['to_address'];
-          //var to_quotation_subject=results['to_quotation_subject'];
-          var to_quotation_subject=challan_subj;
+          var to_quotation_subject=results['to_quotation_subject'];
           
           //var word=total_amount_with_vat;
       }
@@ -255,18 +240,14 @@ for (var i = 0; i < len; i++) {
     console.log(results[i].phone);
 }*/
          $("#txt_to_name").val(results['to_name']);
-          $("#txt_challan_date").val(results['challan_date']);
          $("#txt_to_desig").val(results['to_designation']);
          $("#cbo_to_com_name").val(results['to_company']);
          $("#txt_to_address").val(results['to_address']);
-         $("#txt_to_subject").val(results['challan_subject']);  
-          $("#txt_to_concern").val(results['dearSir']);              
+         $("#txt_to_subject").val(results['challan_subject']);              
          $('#update_id').val(results['challan_id']);
-         $('#hidden_quotation_id').val(results['quotation_id']);
          $('#save').addClass('disabled', true);      
          $('#update').removeClass('disabled',false);
          $('#print').removeClass('disabled',false);
-         $('#csv_generate').removeClass('disabled',false);
 
          $('#txt_to_name').addClass('disabled',false);
          $('#txt_to_desig').addClass('disabled',false);
@@ -275,7 +256,6 @@ for (var i = 0; i < len; i++) {
         
           //for print data
           var to_name= results['to_name'];
-          var to_challan_date= results['challan_date'];
           var to_designation=results['to_designation'];
           var to_company=results['to_company'];
           var to_address=results['to_address'];
@@ -310,25 +290,13 @@ for (var i = 0; i < len; i++) {
       var id = row[0];
       var mst_id = row[1];
       var item_name = row[2];
-      var width_fee = row[3];
-      var width_inc = row[4];
-      var height_fee = row[5];
-      var height_inc = row[6];
+      var width_feet = row[3];
+      var width_inch = row[4];
+      var height_feet = row[5];
+      var height_inch = row[6];
       var total_sqft = row[7];
      
   
-      var width_feet ="";
-      var width_inch ="";
-      var height_feet ="";
-      var height_inch ="";
-      //var q_qty ="";
-
-      if(width_fee>0){width_feet=width_fee} else {}
-      if(width_inc>0){width_inch=width_inc} else {}
-      if(height_fee>0){height_feet=height_fee} else {}
-      if(height_inc>0){height_inch=height_inc} else {}
-      //if(q_qtyy>0){q_qty=q_qtyy} else {}
-
 var incentive_counter=1;
 //alert (incentive_counter);
  update_var += '$("#tbl_quotation_id tbody")'+'<tr id="tbl_tr_id">'+
@@ -384,25 +352,22 @@ function data_update(){
   //$(document).ready(function(){  
   // $("#submit").click(function(){
   var to_name         = $("#txt_to_name").val();
-  var to_challan_date = $("#txt_challan_date").val();
   var to_designation  = $("#txt_to_desig").val();
   var to_company      = $("#cbo_to_com_name").val();
   var to_address      = $("#txt_to_address").val();
   var to_subject      = $("#txt_to_subject").val();
-  var to_concern      = $("#txt_to_concern").val();
   var id              = $("#update_id").val();
 
 	// Returns successful data submission message when the entered information is stored in database.
-   var dataString ='&to_subject='+ to_subject + '&to_challan_date='+ to_challan_date + '&to_concern='+ to_concern +'&update_id1='+ id;
-/*   if(to_name==''||to_designation==''){
+   var dataString ='&to_subject='+ to_subject +'&update_id1='+ id;
+   if(to_name==''||to_designation==''){
           $("#msg_failed").css({"display":"block","background-color":"#EE5269"}).fadeOut(8000).html(" You have must fill out <b>red * mark</b>!"); 
-  }*/
-  if(to_challan_date==''){ $("#challan_date_red").css("color","#EE5269" );}else{ $("#challan_date_red").css("color","green" );}
+  }
   if(to_name==''){ $("#to_name_red").css("color","#EE5269" );}else{ $("#to_name_red").css("color","green" );}
- // if(to_designation==''){ $("#to_desi_red").css("color","#EE5269" );}else{ $("#to_desi_red").css("color","green" );}
+  if(to_designation==''){ $("#to_desi_red").css("color","#EE5269" );}else{ $("#to_desi_red").css("color","green" );}
   if(to_address==''){ $("#to_address_red").css("color","#EE5269" );}else{ $("#to_address_red").css("color","green" );}
   if(to_subject==''){ $("#to_sub_red").css("color","#EE5269" );}else{ $("#to_sub_red").css("color","green" );}
-  if(to_name==''|| to_address=='' || to_challan_date=='' || to_subject==''){
+  if(to_name==''|| to_designation=='' || to_address=='' || to_subject==''){
     $("#msg_failed").css({"display":"block","background-color":"#EE5269"}).fadeOut(8000).html(" You have must fill out <b>red mark</b>!"); 
   }
   else
@@ -418,11 +383,8 @@ function data_update(){
 				 //alert(result);
 			$("#msg_success").css({"display":"block","background-color":"#1E8A2B"}).fadeOut(8000).html(result); // message of html response after submiting data     
 			$("#txt_to_name").val('');
-      $("#txt_challan_date").val('');
       $("#txt_to_desig").val('');
       $("#txt_to_address").val(''); 
-       $("#txt_to_concern").val('');
-       $("#txt_to_subject").val('');
       //$("#total_with_vat").val('');
       //$("#takainword").val('');
       $("#update_id").val(''); 
@@ -561,10 +523,6 @@ function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
 
-$(function() {
-            $( "#txt_challan_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
-            //$( "#txt_delivery_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
-         });
 
 
 
@@ -590,14 +548,18 @@ $(window).resize(function() {
 
 </script>
 <!-- Horizontal menu js -->
-<script>
-  $(document).ready(function(){
-  $('ul li a').click(function(){
-    $('li a').removeClass("active");
-    $(this).addClass("active");
-});
-});
+<script type="text/javascript">
+var current = document.getElementById('default');
 
+  function highlite(el)
+  {
+     if (current != null)
+     {
+         current.className = "";
+     }
+     el.className = "highlite";
+     current = el;
+  }
 </script> 
 <style type="text/css">
 .sidenav {
@@ -655,30 +617,25 @@ $(window).resize(function() {
   font-size: 12px;
 }
 /* horizontal menu style */
-nav ul li{
-  list-style:none;
-  float:left;
-  padding-right:2px;
+#navv {
+	width:100%;
+	list-style:none;
+	margin-left:200px;
 }
-nav ul li a{
-  text-decoration:none;
-  color:#222;
-  background-color:#ccc;
-  padding:8px 8px;
-  text-decoration: none !important;
+#navv li{
+display:inline;
 }
-nav ul li a:hover{
-  background-color: black;
-  color:white;
-  }
-.active{
-  background-color:#d90000;
-  color:#fff;
+#navv a {
+	color:black;
+	text-decoration:none;
+	outline:0;
+	background-color:#CCCCCC;
+	padding:10px;
+}
+#navv a:active, #navv a:focus, #navv a:hover {
+	color:red; 
+}
 
-}
-.activee{
-  background-color:#000;
-}
 </style>
 </head>
 
@@ -712,7 +669,7 @@ nav ul li a:hover{
             </div>-->
           </div>
          <div class="dropdown">
-            <a href="commercial_home.php"><button class="dropbtn activee">commercial</button></a>
+            <a href="commercial_home.php"><button class="dropbtn">commercial</button></a>
             <!--<div class="dropdown-content">
               <a href="#">Link 1</a>
               <a href="#">Link 2</a>
@@ -751,15 +708,13 @@ nav ul li a:hover{
   </div>
   <span style="font-size:20px;cursor:pointer; float:left;" onClick="openNav()">&#9776; menu</span>
   
-<div class="horizontal_menu" style="float:left; text-align:center; margin-left: 25%;">
-  <nav class="navecation"> 
-    <ul id="navv">
-      <li><a class="menu "  href="create_quotation.php">Create quotation</a></li>
-      <li><a class="menu" href="order_entry.php">Order Entry</a></li>
-      <li><a class="menu" href="create_bill.php">Create bill</a></li>
-      <li><a class="menu active" href="create_challan.php">Create challan</a></li>
-    </ul>
-  </nav>
+  <div class="horizontal_menu" style="float:left; text-align:center;">  
+	<ul id="navv">
+	  <li><a id="default" class="highlite" onclick="highlite(this);" href="create_quotation.php">Create quotation</a></li>
+	  <li><a onclick="highlite(this);" href="order_entry.php">Order Entry</a></li>
+	  <li><a onclick="highlite(this);" href="create_bill.php">Create bill</a></li>
+	  <li><a onclick="highlite(this);" href="create_challan.php">Create challan</a></li>
+	</ul>
 </div>
   
   <span>  
@@ -779,43 +734,18 @@ nav ul li a:hover{
   <div class="col-md-12" id="hide_print_section" style="background-color:#fff;margin-top:5px;">
         
     <div class="row">
-     
+      <div class="col-md-12">
+        <h1  style="text-align:center; font-size:20px;"> Challan</h1>
+      </div>
 
          <div class="col-md-12">
-            <!-- modal start -->
-            <!-- Trigger the modal with a button -->
-            <button  type="button" class="btn btn-primary btn-sm center-block" data-toggle="modal" data-target="#myModal">Browse Order</button>
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" role="dialog">
-              <div style="width:90%;" class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                   <h2 style="margin-right:20px;" class="modal-title">Order list</h2>
-                  </div>
-                  <div class="modal-body">
-                             <p  style="margin-top:-10px;"><span class="glyphicon glyphicon-search search-boxs"></span><input type="text" id="search_user_create_order" placeholder="search" onKeyUp="fnc_search_order();"></p>
-                    <div style="margin-top:-20px;" id="data_table_container_order"></div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
-                
-              </div>
-            </div>           
-                  <!-- modal end -->  
+         <h2>order list</h2>
+          <p><span class="glyphicon glyphicon-search search-boxs"></span><input type="text" id="search_user_create_order" placeholder="search" onKeyUp="fnc_search_order();"></p>
+          <div id="data_table_container_order"></div>
         </div>
 
       <div class="col-md-12">
-          <div style="float:right;">
-             <div class="input-group">
-              <input type="text" class="form-control" id="txt_challan_date" name="txt_challan_date" placeholder="Year-Month-Day">
-              <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk" id="challan_date_red"></span></span>
-             </div>
-            </div>
-        <h5  style="text-align:right;"><?php //echo date("d-m-Y") ?></h5>
+        <h5  style="text-align:right;"><?php echo date("d-m-Y") ?></h5>
       </div>
     </div>
 <form name="quotationFrm_1" id="quotationFrm_1" method="POST" action="">
@@ -836,8 +766,8 @@ nav ul li a:hover{
             <label class="control-label col-sm-2 col-md-2" for="designation">Designation:</label>
             <div class="col-sm-10 col-md-10">
              <div class="input-group">
-              <input type="text" class="form-control" id="txt_to_desig" name="txt_to_desig" style="width:285px;" placeholder="designation" disabled>
-               <span class="input-group-addon">&nbsp;</span></span>
+              <input type="text" class="form-control" id="txt_to_desig" name="txt_to_desig" placeholder="designation" disabled>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk" id="to_desi_red"></span></span>
               </div>
             </div>
           </div>        
@@ -892,15 +822,6 @@ nav ul li a:hover{
              <div class="input-group" style="margin-left:10px;">
               <input type="text" class="form-control" id="txt_to_subject" name="txt_to_subject" placeholder="subject">
               <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk" id="to_sub_red"></span></span>
-              </div>
-            </div>
-          </div>
-           <div class="form-group">
-            <label style="margin-right: 10px;" class="control-label col-sm-1 col-md-1" for="concern">Concern:</label>
-            <div class="col-sm-10 col-md-10">
-             <div class="input-group">
-              <input  type="text" class="form-control" id="txt_to_concern" name="txt_to_concern" placeholder="Dear Sir, hello.....">
-              <span class="input-group-addon"></span>
               </div>
             </div>
           </div>
@@ -964,7 +885,6 @@ nav ul li a:hover{
                     <button type="button" class="btn btn-default" id="save" onClick="data_send();">Create</button>
                     <button type="button" class="btn btn-default disabled" id="update" onClick="data_update();">Update</button> 
                     <button type="reset" class="btn btn-default" onClick="active_save_btn();">Reset</button>
-                    <button type="button" class="btn btn-default disabled" id="csv_generate" onClick="fnc_csv_generate();">CSV</button> 
                     <!--<button type="button" class="btn btn-primary disabled" id="print" onClick="data_print(1);">Print</button> -->                
                 </div>
               </div>
@@ -1091,7 +1011,7 @@ function fn_deletebreak_down_tr(rowNo, table_id)
       //$(".fltrow").hide();
       var w = window.open("Surprise", "#");
       var d = w.document.open();
-      w.document.write('<!DOCTYPE html>'+'<html><head><title>Challan Print!</title><link rel="stylesheet" type="text/css" href="../css/style_print.css"></head><body>'+'<button id="print_btn" onclick="window.print();"> Print </button>'+document.getElementById('hide_print_section').innerHTML+'</body></html>');
+      w.document.write('<!DOCTYPE html>'+'<html><head><title>Challan Print!</title><link rel="stylesheet" type="text/css" href="../css/style_print.css"></head><body>'+document.getElementById('hide_print_section').innerHTML+'</body></html>');
       //d.write ('<!DOCTYPE html>'+'<html><head><title>print price quotation</title><link rel="stylesheet" type="text/css" href="style.css" media="print" /></head><body>'+document.getElementById('report_container2').innerHTML+'</body></html>');
       //$(".fltrow").show();
       //'<html><head><title>print price quotation</title><link rel="stylesheet" href="../../../css/style_common.css" type="text/css" media="print" /></head><body>'+document.getElementById('report_container2').innerHTML+'</body</html>');
@@ -1120,15 +1040,12 @@ function fn_deletebreak_down_tr(rowNo, table_id)
                show_detail_form_report(results['quotation_id']);
             var com_lib_array = <?php echo json_encode($return_lib_company_arr); ?>;
             var   to_name= results['to_name'];
-            var   to_challan_date= results['challan_date'];
             var   to_desig= results['to_designation'];
             var   to_com_name =com_lib_array[results['to_company']];
             var   to_address=results['to_address'];
             var   to_subject=results['challan_subject'];
-            var   to_concern=results['dearSir'];
          
             //date
-          var challan_date = new Date(to_challan_date); var dd = challan_date.getDate(); var mm = challan_date.getMonth()+1; var yyyy = challan_date.getFullYear(); if(dd<10){dd='0'+dd} if(mm<10){mm='0'+mm} var challan_date = dd+'/'+mm+'/'+yyyy; 
             var d = new Date();
             var month = d.getMonth()+1;
             var day = d.getDate();
@@ -1137,12 +1054,7 @@ function fn_deletebreak_down_tr(rowNo, table_id)
                 d.getFullYear();
                 //end date
                 //alert(output);
-var add_desig="";
-if(to_desig!="")
-{
-   var add_desig=to_desig+'<br>';
-}
-  
+
             $('#print').removeClass('disabled',false); 
 
             $("#hide_print_section").empty().append('<div class="col-md-12" style="background-color:#fff;">'+
@@ -1152,16 +1064,15 @@ if(to_desig!="")
       '<h4 style="text-align:center;">Challan</h4>'+
     '</div>'+
     '<div class="col-md-12">'+
-      '<h4 style="text-align:right;" id="qdate">Date:'+challan_date+'</h4>'+
+      '<h4 style="text-align:right;" id="qdate">Date:'+output+'</h4>'+
     '</div>'+
     '<div class="col-md-12" style="text-align:left;background-colorf:#ff;">'+
       '<b>To</b><br>'+
       to_name+'<br>'+
-      add_desig+
+      to_desig+'<br>'+
       to_com_name+'<br>'+
       to_address+'<br><br>'+
-      '<b>Subject: </b>' + to_subject+'<br><br>'+
-      to_concern+
+      '<b>Subject: </b>' + to_subject+
       '<table style="margin-top:10px;border-collapse:collapse;">'+
         '<thead>'+
           '<tr>'+
@@ -1224,33 +1135,21 @@ if(to_desig!="")
       var id = row[0];
       var mst_id = row[1];
       var item_name = row[2];
-      var width_fee = row[3];
-      var width_inc = row[4];
-      var height_fee = row[5];
-      var height_inc = row[6];
+      var width_feet = row[3];
+      var width_inch = row[4];
+      var height_feet = row[5];
+      var height_inch = row[6];
       var total_sqft = row[7];
-	   var q_qtyy = row[16];
+	  var q_qty = row[16];
       //var price_per_unit = row[8];
       //var amount = row[9];
         
-      var width_feet ="";
-      var width_inch ="";
-      var height_feet ="";
-      var height_inch ="";
-      var q_qty ="";
-
-      if(width_fee>0){width_feet=width_fee; width_feet=width_feet + '\'' ;} else {}
-      if(width_inc>0){width_inch=width_inc; width_inch=width_inch +'\"' ;} else {}
-      if(height_fee>0){height_feet=height_fee; height_feet= ' x ' + height_feet + '\'' ;} else {}
-      if(height_inc>0){height_inch=height_inc; height_inch=height_inch +'\"' ;} else {}
-      if(q_qtyy>0){q_qty=q_qtyy;} else {}
-
 //var incentive_counter=1;
 //alert (incentive_counter);
  update_varr += '$("#tbl_quotation_id tbody")'+'<tr id="tbl_tr_id">'+
             '<td style="text-align:center;border:1px solid black;">'+sll+'</td>'+
             '<td style="text-align:left;border:1px solid black;">'+item_name+'</td>'+
-            '<td style="text-align:center;border:1px solid black;">'+width_feet + width_inch + height_feet + height_inch +'</td>'+
+            '<td style="text-align:center;border:1px solid black;">'+width_feet+ '\'' +':' + width_inch+'\"' +' x ' +height_feet+ '\'' +':' + height_inch+'\"' +'</td>'+
             '<td style="text-align:center;border:1px solid black;">'+total_sqft+'</td>'+
             '<td style="text-align:right;padding-right:5px;border:1px solid black;">'+q_qty+'</td>'+
             '</tr>';
@@ -1275,27 +1174,7 @@ if(to_desig!="")
     //});
  //});
 }
-//action for Generrate CSV file
-function fnc_csv_generate()
-{
-   var update_id1 = $("#update_id").val();
-   var update_quotation_id2 = $("#hidden_quotation_id").val();
-   var dataString = '&update_id1='+ update_id1 + '&update_quotation_id2='+ update_quotation_id2;
-
-   
-   $.ajax({   
-      type: "GET",
-      url: "controller/create_challan_controller.php",
-      data:  dataString+'&action=csv_export',  
-      dataType: "html",   
-      cache: false,       
-      success: function(response){ 
-      //$("#data_table_container").html(response);
-    var response=response.split('***')         
-      $("#msg_success").css({"display":"block","background-color":"#1E8A2B"}).fadeOut(8000).html(response[1]); 
-      }
-      });
-}   
+  
 </script>
 
 

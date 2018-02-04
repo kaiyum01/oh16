@@ -23,14 +23,11 @@ include('../../include/message_function.php');
 
 //action=save_data,Fetching Values from URL
 if(	isset($_POST['action']) &&
-	isset($_POST['to_quotation_date']) &&
  	isset($_POST['to_name']) && 
  	isset($_POST['to_designation']) && 
  	isset($_POST['to_company'])&&
-	isset($_POST['to_short_company'])&&
 	isset($_POST['to_address']) &&
 	isset($_POST['to_subject']) &&
-	isset($_POST['to_concern']) &&
 	isset($_POST['total_amount']) &&
 	isset($_POST['vat']) && 
 	isset($_POST['ait']) &&
@@ -41,36 +38,29 @@ if(	isset($_POST['action']) &&
  	//isset($_POST['contact1'])
  	){
 	$action_save		=$_POST['action'];
-	$to_quotation_date2 =$_POST['to_quotation_date'];
 	$to_name2			=$_POST['to_name'];
 	$to_designation2	=$_POST['to_designation'];
 	$to_company2		=$_POST['to_company'];
 	$to_short_company2	=$_POST['to_short_company'];
 	$to_address2		=$_POST['to_address'];
 	$to_subject2		=$_POST['to_subject'];
-	$to_concern2		=$_POST['to_concern'];
 	$total_amount2		=$_POST['total_amount'];
 	$vat2				=$_POST['vat'];
 	$ait2				=$_POST['ait'];
 	$total_with_vat2	=$_POST['total_with_vat'];
 	$takainword2		=$_POST['takainword'];
-	$noteStr			=$_POST['noteStr'];
 	$tot_row_dtls		=$_POST['tot_row_dtls'];
 	//generate quotaion number OH+Q+returnNextId+Date
-	$generate_quotation_date=date('m');
+	$generate_quotation_date=date('d-m-y');
   	$quotation_number_generate=return_next_id("id", "com_create_quotation_mst", "1");
-  	$quotation_number_generate='OH-'.$to_short_company2.'-Q-'.$generate_quotation_date.'-'.$quotation_number_generate;
+  	$quotation_number_generate='OH-'.$to_short_company2.'-Q-'.$quotation_number_generate.'-'.$generate_quotation_date;
 
-	
-	$field_array_cus_lc = "mst_id,item_name,width_feet,width_inch,height_feet,height_inch,total_sqft,price_per_unit,q_qty,amount,inserted_by,insert_date";
+	$id= return_next_id("id", "com_create_quotation_mst", "1");
+	$field_array_cus_lc 	= "mst_id,item_name,width_feet,width_inch,height_feet,height_inch,total_sqft,price_per_unit,q_qty,amount,inserted_by,insert_date";
 	if($action_save=="save_data")
 	{
-	  	$query = mysql_query("insert into com_create_quotation_mst(to_name,to_designation,to_company,to_address,to_quotation_subject,total_amount,vat,ait,total_amount_with_vat,quotation_date,total_amount_in_word,quotation_number_generate,notes,dearSir,insert_date,inserted_by) values
-		('$to_name2','$to_designation2','$to_company2','$to_address2','$to_subject2','$total_amount2','$vat2','$ait2','$total_with_vat2','$to_quotation_date2','$takainword2','$quotation_number_generate','$noteStr','$to_concern2','$insert_and_update_date','$login_session_user_id')");
-	  
-		$id= return_next_id("id", "com_create_quotation_mst", "1");
-		$id=$id-1;
-
+	  	$query = mysql_query("insert into com_create_quotation_mst(to_name,to_designation,to_company,to_address,to_quotation_subject,total_amount,vat,ait,total_amount_with_vat,quotation_date,total_amount_in_word,quotation_number_generate,insert_date,inserted_by) values
+		('$to_name2','$to_designation2','$to_company2','$to_address2','$to_subject2','$total_amount2','$vat2','$ait2','$total_with_vat2','$only_today_date','$takainword2','$quotation_number_generate','$insert_and_update_date','$login_session_user_id')");
 	  	$data_array_cus_lc="";
 		//dtls
 			for($i=1; $i<=$tot_row_dtls; $i++)
@@ -220,7 +210,6 @@ if(isset($_POST['action'])){
 //Update data
 //Fetching Values from URL
 if(	isset($_POST['action']) &&
-	isset($_POST['to_quotation_date']) &&
 	isset($_POST['to_name']) && 
  	isset($_POST['to_designation']) && 
  	isset($_POST['to_company'])&&
@@ -236,28 +225,25 @@ if(	isset($_POST['action']) &&
  	//isset($_POST['contact1'])
  	){
 	$action_update		=$_POST['action'];
-	$to_quotation_date2 =$_POST['to_quotation_date'];
 	$to_name2			=$_POST['to_name'];
 	$to_designation2	=$_POST['to_designation'];
 	$to_company2		=$_POST['to_company'];
 	$to_address2		=$_POST['to_address'];
 	$to_subject2		=$_POST['to_subject'];
-	$to_concern2		=$_POST['to_concern'];
 	$total_amount2		=$_POST['total_amount'];
 	$vat2				=$_POST['vat'];
 	$ait2				=$_POST['ait'];
 	$total_with_vat2	=$_POST['total_with_vat'];
 	$takainword2		=$_POST['takainword'];
 	$tot_row_dtls		=$_POST['tot_row_dtls'];
-	$noteStr			=$_POST['noteStr'];
 	$update_id2			=$_POST['update_id'];
 
 	//update query
 	$field_array_cus_lc 	= "mst_id,item_name,width_feet,width_inch,height_feet,height_inch,total_sqft,price_per_unit,q_qty,amount,inserted_by,insert_date";
-	if($action_update=="update_data")
+	if($action_save=="update_data")
 	{
 		$sql_delete = mysql_query("DELETE FROM com_create_quotation_dtls WHERE mst_id=$update_id2");
-	  	$query = mysql_query("update com_create_quotation_mst SET to_name='$to_name2',to_designation='$to_designation2',to_company='$to_company2',to_address='$to_address2',to_quotation_subject='$to_subject2',total_amount='$total_amount2',vat='$vat2',ait='$ait2',total_amount_with_vat='$total_with_vat2',quotation_date='$to_quotation_date2',total_amount_in_word='$takainword2',notes='$noteStr',dearSir='$to_concern2',update_date='$insert_and_update_date',updated_by='$login_session_user_id' where id='$update_id2'");
+	  	$query = mysql_query("update com_create_quotation_mst SET to_name='$to_name2',to_designation='$to_designation2',to_company='$to_company2',to_address='$to_address2',to_quotation_subject='$to_subject2',total_amount='$total_amount2',vat='$vat2',ait='$ait2',total_amount_with_vat='$total_with_vat2',quotation_date='$only_today_date',total_amount_in_word='$takainword2',update_date='$insert_and_update_date',updated_by='$login_session_user_id' where id='$update_id2'");
 	  	$data_array_cus_lc="";
 		//dtls
 			for($i=1; $i<=$tot_row_dtls; $i++)
@@ -345,197 +331,5 @@ if(isset($_GET['action']) && isset($_GET['search_value1'])){
  	
 	}
 }
-?>
-
-<?php
-//for csv export aciton
-if(isset($_GET['action']) && isset($_GET['update_id1'])){
-	 $action_csv	= $_GET['action'];
-	 $update_id3	= $_GET['update_id1'];
-	
-	if($action_csv=="csv_export")
-	{
-		ob_start();	
-		$i=0;
-		// Full texts 	id 	to_name 	to_designation 	to_company 	to_address 	to_quotation_subject 	total_amount 	vat 	total_amount_with_vat 	quotation_date 	total_amount_in_word 	quotation_number_generate 	is_deleted 	status_active 	updated_by 	update_date 	insert_date 	inserted_by 	ait
-		// Full texts 	id 	mst_id 	item_name 	width_feet 	width_inch 	height_feet 	height_inch 	total_sqft 	price_per_unit 	amount 	is_deleted 	status_active 	update_date 	updated_by 	inserted_by 	insert_date 	q_qty
-		$result_mst=mysql_query("select id,to_name,to_designation,to_company,to_address,to_quotation_subject,
-			total_amount,vat,quotation_date,ait,total_amount_with_vat,total_amount_in_word,quotation_number_generate 
-		 from com_create_quotation_mst where id= $update_id3 and is_deleted=0 and status_active=1 ");
-		$result_dtls=mysql_query("select id,mst_id,item_name,width_feet,width_inch,height_feet,height_inch,
-			total_sqft,price_per_unit,amount,is_deleted,status_active,update_date,updated_by,
-			inserted_by,insert_date,q_qty
-		 from com_create_quotation_dtls where mst_id= $update_id3 and is_deleted=0 and status_active=1 ");
-
-				     // for master table
-					$array_mst = array();
-				    while ($project_mst =  mysql_fetch_assoc($result_mst))
-				    {
-				        $array_mst[] = $project_mst;
-				    }
-				    ?>
-				    <div style="width:100%;">
-				    	
-
-						    	<?php
-								//$slNo=0; 
-								$total_amount="";
-								$vat="";
-								$ait="";
-								$total_amount_with_vat=""; 
-								$total_amount_in_word="";
-
-							    foreach ($array_mst as $row_mst)
-							    {
-							    	//$slNo++;
-								?>	<div>	
-										<div style="text-align:center;">Quotation</div>
-										<div style="text-align:right;"><?php echo $row_mst['quotation_date']; ?></div>
-										<div style="text-align:right;"><?php echo $row_mst['quotation_number_generate']; ?></div>
-								   	</div>	
-								   	<div>	
-								    	<div>To</div>
-								    	<div><?php echo $row_mst['to_name']; ?></div>
-								    	<div><?php echo $row_mst['to_designation']; ?></div>
-								    	<div><?php echo $return_lib_company_arr[$row_mst['to_company']]; ?></div>
-								    	<div><?php echo $row_mst['to_address']; ?></div>
-								    	<div><?php echo $row_mst['to_quotation_subject']; ?></div>
-								    	<div><?php  $total_amount=$row_mst['total_amount']; ?></div>
-								    	<div><?php  $vat=$row_mst['vat']; ?></div>
-								    	<div><?php  $ait=$row_mst['ait']; ?></div>
-								    	<div><?php  $total_amount_with_vat=$row_mst['total_amount_with_vat']; ?></div>
-								    	<div><?php  $total_amount_in_word=$row_mst['total_amount_in_word']; ?></div>
-								    </div>	
-					
-								<?php
-								 }
-								?>
-
-					 
-						<p></p>
-					</div>
-
-
-				    <?php
-					 // for details table
-					 $array_dtls = array();
-				    while ($project_dtls =  mysql_fetch_assoc($result_dtls))
-				    {
-				        $array_dtls[] = $project_dtls;
-				    }
-				    ?>
-
-				    	<table border="1" class="table table-hover">
-						    <thead>
-						       <tr>
-								<th>SL</th>
-								<th>Particulars</th>
-								<th>Size</th>
-								<th>Total Sqft / Pcs</th>
-								<th>Unit Price</th>
-								<th>Qty</th>
-								<th>Amount</th>				
-							  </tr>
-						    </thead>
-						    <tbody>
-
-								<?php
-								$sl=0;
-							    foreach ($array_dtls as $row_dtls)
-							    {
-							    	$sl++;
-									$width_fee=$row_dtls['width_feet'];
-									$width_inc=$row_dtls['width_inch'];
-									$height_fee=$row_dtls['height_feet'];
-									$height_inc=$row_dtls['height_inch'];
-									$q_qtyy= $row_dtls['q_qty']; 
-
-									 $width_feet ="";
-									 $width_inch ="";
-									 $height_feet ="";
-									 $height_inch ="";
-									 $q_qty ="";
-
-							    	if($width_fee>0){$width_feet=$width_fee; $width_feet=$width_feet."'" ;} else {}
-							    	if($width_inc>0){$width_inch=$width_inc; $width_inch=$width_inch."''" ;} else {}
-      								if($height_fee>0){$height_feet=$height_fee; $height_feet= ' x ' .$height_feet."'" ;} else {}
-      								if($height_inc>0){$height_inch=$height_inc; $height_inch=$height_inch."''" ;} else {}
-								    if($q_qtyy>0){$q_qty=$q_qtyy;} else {}
-
-
-
-								?>
-								    <tr>
-										<td align="center"><?php echo $sl; ?></td>
-								        <td><?php echo $row_dtls['item_name']; ?></td>
-								        <td><?php echo $width_feet.$width_inch.$height_feet.$height_inch; ?></td>
-								       
-								        <td><?php echo $row_dtls['total_sqft']; ?></td>
-								        <td><?php echo $row_dtls['price_per_unit']; ?></td> 
-								        <td><?php echo $q_qty; ?></td>
-								        <td><?php echo $row_dtls['amount']; ?></td>
-								    </tr>
-								<?php
-								 }
-								?>
-								 <tr>
-									<td colspan="6" style="text-align:right;">Sub Total</td>
-									<td><?php echo $total_amount; ?></td>
-								</tr>
-								 <?php 
-								 if($vat>0)
-								 {
-								 ?>
-								<tr>	
-									<td colspan="6" style="text-align:right;">VAT %</td>
-									<td><?php  echo $vat; ?></td>
-								 </tr>
-								 <?php
-								}
-								?>
-								 <?php 
-								 if($ait>0)
-								 {
-								 ?>
-								 <tr>	
-									<td colspan="6" style="text-align:right;">AIT %</td>
-									<td><?php  echo $ait; ?></td>
-								 </tr>
-								 <?php
-								 }
-								 ?>
-								 <tr>
-								 	<td colspan="6" style="text-align:right;">Total Amount Tk</td>
-									<td><?php echo $total_amount_with_vat; ?></td>
-								 </tr>
-					    	</tbody>
-					  	</table>
-						<div><?php echo "Taka in word:
-  ".$total_amount_in_word; ?></div>						
-  <div>Note:</div>
-
-  <div><div style="text-align:left;">Receiver's Signature</div><div style="text-align:right;"> OH (Out of Home)</div></div>
-
-
-
-
-
-
-	
-<?php
-	}
-	$title="oh_quotation_";
-	$name=$login_session_username;
-	$generateTime=time();
-  	$html=ob_get_contents();	
-	$filename='../../CSV_FILE/quotation/'.$title.$name."_".$generateTime.".xls";
-	$create_new_doc = fopen($filename, 'w');
-	$is_created = fwrite($create_new_doc,$html);
-	//$filename=$title.$name."_".$generateTime.".xls";
-	echo '***Excel file has been generated' . $filename;
-	exit();
-
-}
-
 
 ?>

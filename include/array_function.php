@@ -6,6 +6,4 @@ $division_bd=array(1=>"Dhaka",2=>"Chittagong",3=>"Khulna",4=>"Rajshahi",5=>"Bari
 $production_status=array(1=>"Not Yet Started",2=>"On Going",3=>"Finish");
 $bill_status=array(1=>"Not-Billed",2=>"Billed");
 
-$notes_arr=array(1=>"Note 1",2=>"Note 2",3=>"Note 3");
-
 ?>
